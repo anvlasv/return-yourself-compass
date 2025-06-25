@@ -2,13 +2,14 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Bookmark, Play, Clock } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 
 interface ReadListenProps {
   onBack: () => void;
 }
 
-const content = [
+const contentEn = [
   {
     id: 1,
     type: "article",
@@ -65,13 +66,73 @@ const content = [
   }
 ];
 
+const contentRu = [
+  {
+    id: 1,
+    type: "article",
+    title: "Понимание горя от потерянной любви",
+    description: "Почему расставания ощущаются как смерть, и это совершенно нормально",
+    readTime: "5 мин чтения",
+    category: "Понимание",
+    color: "from-blue-500 to-blue-600"
+  },
+  {
+    id: 2,
+    type: "audio",
+    title: "Управляемая медитация при разбитом сердце",
+    description: "10-минутная практика, чтобы найти покой в буре",
+    readTime: "10 мин прослушивания",
+    category: "Практика",
+    color: "from-purple-500 to-purple-600"
+  },
+  {
+    id: 3,
+    type: "article",
+    title: "Прекрати проверять её соцсети",
+    description: "Практические стратегии, чтобы разорвать навязчивый цикл",
+    readTime: "7 мин чтения",
+    category: "Действие",
+    color: "from-orange-500 to-orange-600"
+  },
+  {
+    id: 4,
+    type: "audio",
+    title: "Восстановление самооценки после отказа",
+    description: "Переосмысление своей ценности вне отношений",
+    readTime: "15 мин прослушивания",
+    category: "Рост",
+    color: "from-emerald-500 to-emerald-600"
+  },
+  {
+    id: 5,
+    type: "article",
+    title: "Когда обращаться (А когда не стоит)",
+    description: "Принятие умных решений о контакте",
+    readTime: "6 мин чтения",
+    category: "Руководство",
+    color: "from-red-500 to-red-600"
+  },
+  {
+    id: 6,
+    type: "audio",
+    title: "Истории для сна для разбитых сердец",
+    description: "Мягкие повествования, чтобы помочь тебе отдохнуть",
+    readTime: "20 мин прослушивания",
+    category: "Отдых",
+    color: "from-indigo-500 to-indigo-600"
+  }
+];
+
 export const ReadListen = ({ onBack }: ReadListenProps) => {
+  const { t, language } = useLanguage();
+  const content = language === 'ru' ? contentRu : contentEn;
+
   const handleContentClick = (item: typeof content[0]) => {
-    toast(`Opening "${item.title}"...`);
+    toast(`Открывается "${item.title}"...`);
   };
 
   const handleBookmark = (item: typeof content[0]) => {
-    toast(`Saved "${item.title}" to your reading list`);
+    toast(t('savedToReading').replace('Saved', language === 'ru' ? 'Сохранено' : 'Saved').replace('"', `"${item.title}"`));
   };
 
   return (
@@ -83,12 +144,12 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
           className="text-white mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Menu
+          {t('backToMenu')}
         </Button>
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">Read & Listen</h2>
-          <p className="text-slate-300">Helpful content for your healing journey</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{t('readListen')}</h2>
+          <p className="text-slate-300">{t('helpfulContent')}</p>
         </div>
 
         <div className="space-y-4 pb-8">
@@ -143,15 +204,15 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
 
         <Card className="p-4 bg-slate-800 border-slate-700">
           <div className="text-center">
-            <h3 className="text-white font-semibold mb-2">Want More Content?</h3>
+            <h3 className="text-white font-semibold mb-2">{t('wantMoreContent')}</h3>
             <p className="text-slate-300 text-sm mb-4">
-              Get personalized resources based on your progress
+              {t('personalizedResources')}
             </p>
             <Button 
-              onClick={() => toast("Booking feature coming soon!")}
+              onClick={() => toast(t('bookingFeature'))}
               className="bg-blue-500 hover:bg-blue-600"
             >
-              Book a Session
+              {t('bookSession')}
             </Button>
           </div>
         </Card>

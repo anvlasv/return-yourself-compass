@@ -1,71 +1,80 @@
 
 import { Card } from "@/components/ui/card";
 import { Calendar, Heart, BookOpen, Shield, Phone, TrendingUp } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import type { AppScreen } from "@/pages/Index";
 
 interface MainMenuProps {
   onNavigate: (screen: AppScreen) => void;
 }
 
-const menuItems = [
-  {
-    id: "book" as AppScreen,
-    title: "Book a Session",
-    description: "Professional support when you need it",
-    icon: Calendar,
-    color: "from-blue-500 to-blue-600",
-    urgent: false
-  },
-  {
-    id: "checkup" as AppScreen,
-    title: "Emotional Check-Up",
-    description: "Understanding where you are right now",
-    icon: Heart,
-    color: "from-emerald-500 to-emerald-600",
-    urgent: false
-  },
-  {
-    id: "read" as AppScreen,
-    title: "Read / Listen",
-    description: "Helpful content for your journey",
-    icon: BookOpen,
-    color: "from-purple-500 to-purple-600",
-    urgent: false
-  },
-  {
-    id: "sos" as AppScreen,
-    title: "SOS Tools",
-    description: "Immediate help when overwhelmed",
-    icon: Shield,
-    color: "from-orange-500 to-orange-600",
-    urgent: true
-  },
-  {
-    id: "emergency" as AppScreen,
-    title: "Emergency Contact",
-    description: "Reach out for urgent support",
-    icon: Phone,
-    color: "from-red-500 to-red-600",
-    urgent: true
-  },
-  {
-    id: "progress" as AppScreen,
-    title: "Your Progress",
-    description: "Track your healing journey",
-    icon: TrendingUp,
-    color: "from-teal-500 to-teal-600",
-    urgent: false
-  }
-];
-
 export const MainMenu = ({ onNavigate }: MainMenuProps) => {
+  const { t } = useLanguage();
+
+  const menuItems = [
+    {
+      id: "book" as AppScreen,
+      titleKey: "bookSession",
+      descriptionKey: "bookSessionDesc",
+      icon: Calendar,
+      color: "from-blue-500 to-blue-600",
+      urgent: false
+    },
+    {
+      id: "checkup" as AppScreen,
+      titleKey: "emotionalCheckup",
+      descriptionKey: "emotionalCheckupDesc",
+      icon: Heart,
+      color: "from-emerald-500 to-emerald-600",
+      urgent: false
+    },
+    {
+      id: "read" as AppScreen,
+      titleKey: "readListen",
+      descriptionKey: "readListenDesc",
+      icon: BookOpen,
+      color: "from-purple-500 to-purple-600",
+      urgent: false
+    },
+    {
+      id: "sos" as AppScreen,
+      titleKey: "sosTools",
+      descriptionKey: "sosToolsDesc",
+      icon: Shield,
+      color: "from-orange-500 to-orange-600",
+      urgent: true
+    },
+    {
+      id: "emergency" as AppScreen,
+      titleKey: "emergencyContact",
+      descriptionKey: "emergencyContactDesc",
+      icon: Phone,
+      color: "from-red-500 to-red-600",
+      urgent: true
+    },
+    {
+      id: "progress" as AppScreen,
+      titleKey: "yourProgress",
+      descriptionKey: "yourProgressDesc",
+      icon: TrendingUp,
+      color: "from-teal-500 to-teal-600",
+      urgent: false
+    }
+  ];
+
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-md mx-auto">
+        {/* Language Selector */}
+        <div className="flex justify-end mb-4 pt-4">
+          <LanguageSelector />
+        </div>
+
         {/* Header */}
-        <div className="text-center mb-8 pt-8">
-          <h2 className="text-2xl font-bold text-white mb-2">How can we help?</h2>
-          <p className="text-slate-300">Choose what feels right for you now</p>
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-white mb-2">{t('howCanWeHelp')}</h2>
+          <p className="text-slate-300">{t('chooseWhatFeels')}</p>
         </div>
 
         {/* Menu Cards */}
@@ -86,10 +95,10 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-white mb-1">
-                      {item.title}
-                      {item.urgent && <span className="ml-2 text-xs bg-white/30 px-2 py-1 rounded-full">URGENT</span>}
+                      {t(item.titleKey)}
+                      {item.urgent && <span className="ml-2 text-xs bg-white/30 px-2 py-1 rounded-full">{t('urgent')}</span>}
                     </h3>
-                    <p className="text-white/80 text-sm">{item.description}</p>
+                    <p className="text-white/80 text-sm">{t(item.descriptionKey)}</p>
                   </div>
                 </div>
               </Card>
