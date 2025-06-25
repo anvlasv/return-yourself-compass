@@ -1,8 +1,10 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Bookmark, Play, Clock } from "lucide-react";
+import { ArrowLeft, Bookmark, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SessionBookingModal } from "@/components/SessionBookingModal";
 import { toast } from "sonner";
 
 interface ReadListenProps {
@@ -126,18 +128,19 @@ const contentRu = [
 export const ReadListen = ({ onBack }: ReadListenProps) => {
   const { t, language } = useLanguage();
   const content = language === 'ru' ? contentRu : contentEn;
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   const handleContentClick = (item: typeof content[0]) => {
     toast(`Открывается "${item.title}"...`);
   };
 
   const handleBookmark = (item: typeof content[0]) => {
-    toast(t('savedToReading').replace('Saved', language === 'ru' ? 'Сохранено' : 'Saved').replace('"', `"${item.title}"`));
+    toast(t('savedToReading'));
   };
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="max-w-md mx-auto pt-8">
+    <div className="min-h-screen p-4 pt-20">
+      <div className="max-w-md mx-auto">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -209,13 +212,18 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
               {t('personalizedResources')}
             </p>
             <Button 
-              onClick={() => toast(t('bookingFeature'))}
+              onClick={() => setIsBookingModalOpen(true)}
               className="bg-blue-500 hover:bg-blue-600"
             >
-              {t('bookSession')}
+              {t('requestSession')}
             </Button>
           </div>
         </Card>
+
+        <SessionBookingModal 
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+        />
       </div>
     </div>
   );

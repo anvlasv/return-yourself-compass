@@ -2,7 +2,6 @@
 import { Card } from "@/components/ui/card";
 import { Calendar, Heart, BookOpen, Shield, Phone, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { LanguageSelector } from "@/components/LanguageSelector";
 import type { AppScreen } from "@/pages/Index";
 
 interface MainMenuProps {
@@ -64,13 +63,8 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
   ];
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-4 pt-20">
       <div className="max-w-md mx-auto">
-        {/* Language Selector */}
-        <div className="flex justify-end mb-4 pt-4">
-          <LanguageSelector />
-        </div>
-
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-white mb-2">{t('howCanWeHelp')}</h2>

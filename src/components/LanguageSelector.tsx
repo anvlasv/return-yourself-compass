@@ -1,23 +1,31 @@
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export const LanguageSelector = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center space-x-2">
-      <Globe className="h-4 w-4 text-white" />
-      <Select value={language} onValueChange={(value) => setLanguage(value as 'en' | 'ru')}>
-        <SelectTrigger className="w-20 bg-white/20 border-white/30 text-white">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="bg-slate-800 border-slate-600">
-          <SelectItem value="en" className="text-white hover:bg-slate-700">EN</SelectItem>
-          <SelectItem value="ru" className="text-white hover:bg-slate-700">RU</SelectItem>
-        </SelectContent>
-      </Select>
+    <div className="flex items-center bg-white/10 rounded-lg p-1">
+      <button
+        onClick={() => setLanguage('en')}
+        className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
+          language === 'en' 
+            ? 'bg-white text-blue-600' 
+            : 'text-white/70 hover:text-white'
+        }`}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => setLanguage('ru')}
+        className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
+          language === 'ru' 
+            ? 'bg-white text-blue-600' 
+            : 'text-white/70 hover:text-white'
+        }`}
+      >
+        RU
+      </button>
     </div>
   );
 };

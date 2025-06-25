@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Calendar, Clock, Video, MapPin } from "lucide-react";
+import { ArrowLeft, Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 
@@ -32,8 +32,8 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
   };
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="max-w-md mx-auto pt-8">
+    <div className="min-h-screen p-4 pt-20">
+      <div className="max-w-md mx-auto">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -48,7 +48,6 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
           <p className="text-slate-300">{t('professionalSupport')}</p>
         </div>
 
-        {/* First Free Session Offer */}
         <Card className="p-4 bg-gradient-to-r from-green-500 to-green-600 border-0 mb-6">
           <div className="text-center text-white">
             <h3 className="font-semibold mb-1">{t('firstSessionFree')}</h3>
@@ -58,7 +57,6 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
           </div>
         </Card>
 
-        {/* Format Selection */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-white mb-4">{t('chooseFormat')}</h3>
           <div className="grid grid-cols-2 gap-4">
@@ -94,7 +92,6 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
           </div>
         </div>
 
-        {/* Date Selection */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-white mb-4">{t('selectDate')}</h3>
           <input
@@ -102,11 +99,10 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
             min={new Date().toISOString().split('T')[0]}
-            className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white"
+            className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert"
           />
         </div>
 
-        {/* Time Selection */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-white mb-4">{t('selectTime')}</h3>
           <div className="grid grid-cols-3 gap-2">
@@ -118,8 +114,8 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
                 onClick={() => setSelectedTime(time)}
                 className={
                   selectedTime === time 
-                    ? "bg-blue-500 hover:bg-blue-600" 
-                    : "border-slate-600 text-white hover:bg-slate-700"
+                    ? "bg-blue-500 hover:bg-blue-600 text-white" 
+                    : "border-slate-600 bg-slate-800 text-white hover:bg-slate-700"
                 }
               >
                 {time}
@@ -128,7 +124,6 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
           </div>
         </div>
 
-        {/* Book Button */}
         <Button 
           onClick={handleBooking}
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 text-lg"
