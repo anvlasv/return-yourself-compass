@@ -1,6 +1,8 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { EmotionalCheckupResult } from "@/types/emotionalCheckup";
 import type { AppScreen } from "@/pages/Index";
@@ -12,11 +14,16 @@ interface CheckupResultProps {
 
 export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
   const { t } = useLanguage();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const handleSOSClick = () => {
     if (onNavigate) {
       onNavigate("sos");
     }
+  };
+
+  const handleBookingClick = () => {
+    setIsBookingOpen(true);
   };
 
   return (
@@ -29,20 +36,33 @@ export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
         </p>
         
         <div className="space-y-3">
+          <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                onClick={handleBookingClick}
+                className="w-full bg-white/20 hover:bg-white/30"
+              >
+                {t('bookSession')}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-slate-800 border-slate-700">
+              <DialogHeader>
+                <DialogTitle className="text-white">{t('bookingFeature')}</DialogTitle>
+              </DialogHeader>
+              <div className="p-4">
+                <p className="text-slate-300 text-center">
+                  {t('bookingFeature')}
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Button 
-            onClick={() => {/* TODO: Implement booking modal */}}
-            className="w-full bg-white/20 hover:bg-white/30"
+            onClick={handleSOSClick}
+            className="w-full bg-slate-800 text-white hover:bg-slate-700 border-2 border-white/20"
           >
-            {t('bookSession')}
+            {t('sosTools')}
           </Button>
-          {result.color === "from-red-500 to-red-600" && (
-            <Button 
-              onClick={handleSOSClick}
-              className="w-full bg-slate-800 text-white hover:bg-slate-700 border-2 border-white/20"
-            >
-              {t('tryTechnique')}
-            </Button>
-          )}
         </div>
       </div>
     </Card>

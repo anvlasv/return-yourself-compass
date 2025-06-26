@@ -11,7 +11,7 @@ interface CheckupQuestionProps {
 export const CheckupQuestion = ({ question, onAnswer }: CheckupQuestionProps) => {
   return (
     <Card className="p-6 bg-slate-800 border-slate-700 mb-6">
-      <h3 className="text-xl font-semibold text-white text-center mb-8">
+      <h3 className="text-xl font-semibold text-white text-center mb-8 break-words">
         {question.question}
       </h3>
       
@@ -21,10 +21,10 @@ export const CheckupQuestion = ({ question, onAnswer }: CheckupQuestionProps) =>
             key={index}
             onClick={() => onAnswer(option.value)}
             variant="outline"
-            className="w-full p-6 h-auto border-slate-600 bg-slate-700 hover:bg-slate-600 text-white justify-start"
+            className="w-full p-6 h-auto border-slate-600 bg-slate-700 hover:bg-slate-600 text-white justify-start break-words"
           >
-            <span className="text-2xl mr-4">{option.emoji}</span>
-            <span className="text-lg">{option.text}</span>
+            <span className="text-2xl mr-4 flex-shrink-0">{option.emoji}</span>
+            <span className="text-lg text-left">{option.text}</span>
           </Button>
         ))}
       </div>
