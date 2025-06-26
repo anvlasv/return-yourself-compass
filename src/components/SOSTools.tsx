@@ -3,12 +3,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Play, Pause, RotateCcw } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SOSToolsProps {
   onBack: () => void;
 }
 
 export const SOSTools = ({ onBack }: SOSToolsProps) => {
+  const { t } = useLanguage();
   const [activeExercise, setActiveExercise] = useState<string | null>(null);
   const [isBreathingActive, setIsBreathingActive] = useState(false);
   const [breathingStep, setBreathingStep] = useState("inhale");
@@ -17,31 +19,31 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
   const exercises = [
     {
       id: "breathing",
-      title: "4-7-8 Breathing",
-      description: "Calm your nervous system with controlled breathing",
+      title: t('breathingExercise478'),
+      description: t('breathingExerciseDesc'),
       icon: "🫁",
-      action: "Start Breathing"
+      action: t('startBreathing')
     },
     {
       id: "grounding",
-      title: "5-4-3-2-1 Grounding",
-      description: "Connect with your present moment",
+      title: t('grounding5432'),
+      description: t('groundingDesc'),
       icon: "🧘",
-      action: "Begin Grounding"
+      action: t('beginGrounding')
     },
     {
       id: "writing",
-      title: "Thought Release",
-      description: "Write down what's overwhelming you",
+      title: t('thoughtRelease'),
+      description: t('thoughtReleaseDesc'),
       icon: "✍️",
-      action: "Start Writing"
+      action: t('startWriting')
     },
     {
       id: "movement",
-      title: "Quick Movement",
-      description: "Release tension with simple exercises",
+      title: t('quickMovement'),
+      description: t('quickMovementDesc'),
       icon: "🏃",
-      action: "Get Moving"
+      action: t('getMoving')
     }
   ];
 
@@ -91,7 +93,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
             className="text-white mb-6"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Stop Exercise
+            {t('stopExercise')}
           </Button>
 
           <div className="text-center">
@@ -108,9 +110,9 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
             </div>
 
             <h3 className="text-2xl font-bold text-white mb-4">
-              {breathingStep === "inhale" ? "Breathe In" :
-               breathingStep === "hold" ? "Hold" :
-               "Breathe Out"}
+              {breathingStep === "inhale" ? t('breatheIn') :
+               breathingStep === "hold" ? t('hold') :
+               t('breatheOut')}
             </h3>
             
             <div className="text-4xl font-bold text-blue-400 mb-8">
@@ -118,9 +120,9 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
             </div>
 
             <p className="text-slate-300 mb-8">
-              {breathingStep === "inhale" ? "Fill your lungs slowly and deeply" :
-               breathingStep === "hold" ? "Hold your breath, stay calm" :
-               "Release all the tension and stress"}
+              {breathingStep === "inhale" ? t('fillLungsSlowly') :
+               breathingStep === "hold" ? t('holdBreathCalm') :
+               t('releaseAllTension')}
             </p>
 
             <Button 
@@ -128,7 +130,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
               className="bg-red-500 hover:bg-red-600"
             >
               <Pause className="mr-2 h-4 w-4" />
-              I'm Feeling Better
+              {t('imFeelingBetter')}
             </Button>
           </div>
         </div>
@@ -138,11 +140,11 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
 
   if (activeExercise === "grounding") {
     const groundingSteps = [
-      "Look around and name 5 things you can see",
-      "Notice 4 things you can touch or feel",
-      "Listen for 3 different sounds",
-      "Identify 2 things you can smell",
-      "Think of 1 thing you can taste"
+      t('groundingStep1'),
+      t('groundingStep2'),
+      t('groundingStep3'),
+      t('groundingStep4'),
+      t('groundingStep5')
     ];
 
     return (
@@ -154,12 +156,12 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
             className="text-white mb-6"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Tools
+            {t('backToTools')}
           </Button>
 
           <Card className="p-6 bg-slate-800 border-slate-700">
             <h3 className="text-xl font-bold text-white text-center mb-6">
-              5-4-3-2-1 Grounding Exercise
+              {t('groundingExerciseTitle')}
             </h3>
             
             <div className="space-y-4">
@@ -175,7 +177,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                 onClick={() => setActiveExercise(null)}
                 className="bg-green-500 hover:bg-green-600"
               >
-                I'm More Grounded Now
+                {t('imMoreGrounded')}
               </Button>
             </div>
           </Card>
@@ -193,12 +195,12 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
           className="text-white mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Menu
+          {t('backToMenu')}
         </Button>
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">SOS Tools</h2>
-          <p className="text-slate-300">Quick relief when you're overwhelmed</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{t('sosToolsTitle')}</h2>
+          <p className="text-slate-300">{t('quickReliefOverwhelmed')}</p>
         </div>
 
         <div className="space-y-4">
@@ -237,7 +239,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
 
         <div className="mt-8 p-4 bg-orange-500/20 border border-orange-500/30 rounded-lg">
           <p className="text-orange-200 text-sm text-center">
-            If you're having thoughts of self-harm, please reach out immediately to emergency services or crisis helplines.
+            {t('crisisHelplineWarning')}
           </p>
         </div>
       </div>

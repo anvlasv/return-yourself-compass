@@ -11,8 +11,8 @@ export const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700/50 backdrop-blur-sm">
-      <div className="flex items-center justify-between p-4">
+    <header className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700/50 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-3 h-14">
         <Dialog open={isProfileOpen} onOpenChange={setIsProfileOpen}>
           <DialogTrigger asChild>
             <button className="flex items-center space-x-3 hover:bg-white/10 rounded-lg p-2 transition-colors">

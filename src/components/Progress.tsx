@@ -4,60 +4,62 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Plus, TrendingUp, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProgressProps {
   onBack: () => void;
 }
 
-const sampleProgress = [
-  {
-    id: 1,
-    date: "Today",
-    achievement: "Didn't check her social media",
-    type: "milestone",
-    icon: "🏆"
-  },
-  {
-    id: 2,
-    date: "Yesterday",
-    achievement: "Went to the gym",
-    type: "activity",
-    icon: "💪"
-  },
-  {
-    id: 3,
-    date: "2 days ago",
-    achievement: "Had dinner with friends",
-    type: "social",
-    icon: "👥"
-  },
-  {
-    id: 4,
-    date: "3 days ago",
-    achievement: "Completed emotional check-up",
-    type: "growth",
-    icon: "🧠"
-  },
-  {
-    id: 5,
-    date: "1 week ago",
-    achievement: "Started using Return Yourself app",
-    type: "milestone",
-    icon: "🌱"
-  }
-];
-
 export const Progress = ({ onBack }: ProgressProps) => {
+  const { t } = useLanguage();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProgress, setNewProgress] = useState("");
 
+  const sampleProgress = [
+    {
+      id: 1,
+      date: t('today'),
+      achievement: t('didntCheckSocialMedia'),
+      type: "milestone",
+      icon: "🏆"
+    },
+    {
+      id: 2,
+      date: t('yesterday'),
+      achievement: t('wentToGym'),
+      type: "activity",
+      icon: "💪"
+    },
+    {
+      id: 3,
+      date: t('twoDaysAgo'),
+      achievement: t('hadDinnerWithFriends'),
+      type: "social",
+      icon: "👥"
+    },
+    {
+      id: 4,
+      date: t('threeDaysAgo'),
+      achievement: t('completedEmotionalCheckup'),
+      type: "growth",
+      icon: "🧠"
+    },
+    {
+      id: 5,
+      date: t('oneWeekAgo'),
+      achievement: t('startedUsingApp'),
+      type: "milestone",
+      icon: "🌱"
+    }
+  ];
+
   const handleAddProgress = () => {
     if (!newProgress.trim()) {
-      toast("Please describe your progress");
+      toast(t('pleaseDescribeYourProgress'));
       return;
     }
     
-    toast("Progress added! Great work.");
+    toast(t('progressAddedGreat'));
     setNewProgress("");
     setShowAddForm(false);
   };
@@ -81,23 +83,23 @@ export const Progress = ({ onBack }: ProgressProps) => {
           className="text-white mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Menu
+          {t('backToMenu')}
         </Button>
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">Your Progress</h2>
-          <p className="text-slate-300">Every step forward matters</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{t('yourProgressTitle')}</h2>
+          <p className="text-slate-300">{t('everyStepForwardMatters')}</p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="p-4 bg-gradient-to-r from-emerald-500 to-emerald-600 border-0 text-center">
             <div className="text-2xl font-bold text-white">7</div>
-            <div className="text-emerald-100 text-sm">Days of Progress</div>
+            <div className="text-emerald-100 text-sm">{t('daysOfProgress')}</div>
           </Card>
           <Card className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 border-0 text-center">
             <div className="text-2xl font-bold text-white">5</div>
-            <div className="text-blue-100 text-sm">Achievements</div>
+            <div className="text-blue-100 text-sm">{t('achievements')}</div>
           </Card>
         </div>
 
@@ -108,19 +110,19 @@ export const Progress = ({ onBack }: ProgressProps) => {
             className="w-full mb-6 bg-blue-500 hover:bg-blue-600"
           >
             <Plus className="mr-2 h-4 w-4" />
-            Add Progress
+            {t('addProgress')}
           </Button>
         )}
 
         {/* Add Progress Form */}
         {showAddForm && (
           <Card className="p-4 bg-slate-800 border-slate-700 mb-6">
-            <h3 className="text-white font-semibold mb-4">What progress did you make?</h3>
+            <h3 className="text-white font-semibold mb-4">{t('whatProgressMade')}</h3>
             <input
               type="text"
               value={newProgress}
               onChange={(e) => setNewProgress(e.target.value)}
-              placeholder="I did something good for myself..."
+              placeholder={t('progressPlaceholder')}
               className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white mb-4"
             />
             <div className="flex gap-2">
@@ -128,14 +130,14 @@ export const Progress = ({ onBack }: ProgressProps) => {
                 onClick={handleAddProgress}
                 className="flex-1 bg-green-500 hover:bg-green-600"
               >
-                Add Progress
+                {t('addProgressBtn')}
               </Button>
               <Button 
                 onClick={() => setShowAddForm(false)}
                 variant="outline"
                 className="border-slate-600 text-white hover:bg-slate-700"
               >
-                Cancel
+                {t('cancel')}
               </Button>
             </div>
           </Card>
@@ -145,7 +147,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
         <div className="space-y-4 pb-8">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
             <TrendingUp className="mr-2 h-5 w-5" />
-            Your Journey
+            {t('yourJourney')}
           </h3>
           
           {sampleProgress.map((item, index) => (
@@ -172,9 +174,9 @@ export const Progress = ({ onBack }: ProgressProps) => {
         {/* Encouragement Card */}
         <Card className="p-6 bg-gradient-to-r from-purple-500 to-purple-600 border-0 text-center">
           <div className="text-4xl mb-3">🌟</div>
-          <h3 className="text-white font-bold mb-2">You're Making Progress</h3>
+          <h3 className="text-white font-bold mb-2">{t('youMakingProgress')}</h3>
           <p className="text-purple-100 text-sm">
-            Recovery isn't linear, but every step counts. Keep going.
+            {t('recoveryNotLinear')}
           </p>
         </Card>
       </div>
