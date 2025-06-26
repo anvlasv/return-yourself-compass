@@ -8,12 +8,14 @@ import { CheckupProgress } from "@/components/CheckupProgress";
 import { CheckupQuestion } from "@/components/CheckupQuestion";
 import { CheckupResult } from "@/components/CheckupResult";
 import { getCheckupResult } from "@/utils/emotionalCheckupUtils";
+import type { AppScreen } from "@/pages/Index";
 
 interface EmotionalCheckupProps {
   onBack: () => void;
+  onNavigate?: (screen: AppScreen) => void;
 }
 
-export const EmotionalCheckup = ({ onBack }: EmotionalCheckupProps) => {
+export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) => {
   const { t } = useLanguage();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -49,7 +51,7 @@ export const EmotionalCheckup = ({ onBack }: EmotionalCheckupProps) => {
             {t('backToMenu')}
           </Button>
 
-          <CheckupResult result={result} />
+          <CheckupResult result={result} onNavigate={onNavigate} />
         </div>
       </div>
     );

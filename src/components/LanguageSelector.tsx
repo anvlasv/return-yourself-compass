@@ -1,35 +1,43 @@
 
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center space-x-2">
-      <Globe className="h-5 w-5 text-white/70" />
-      <div className="flex items-center bg-white/10 rounded-lg p-1">
-        <button
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+          <Globe className="h-4 w-4 mr-2" />
+          {language === 'en' ? 'EN' : 'RU'}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="bg-slate-800 border-slate-700">
+        <DropdownMenuItem 
           onClick={() => setLanguage('en')}
-          className={`px-3 py-1 text-sm font-medium rounded transition-colors ${
-            language === 'en' 
-              ? 'bg-white text-blue-600' 
-              : 'text-white/70 hover:text-white'
+          className={`text-white hover:bg-slate-700 cursor-pointer ${
+            language === 'en' ? 'bg-slate-700' : ''
           }`}
         >
-          EN
-        </button>
-        <button
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem 
           onClick={() => setLanguage('ru')}
-          className={`px-3 py-1 text-sm font-medium rounded transition-colors ${
-            language === 'ru' 
-              ? 'bg-white text-blue-600' 
-              : 'text-white/70 hover:text-white'
+          className={`text-white hover:bg-slate-700 cursor-pointer ${
+            language === 'ru' ? 'bg-slate-700' : ''
           }`}
         >
-          RU
-        </button>
-      </div>
-    </div>
+          Русский
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

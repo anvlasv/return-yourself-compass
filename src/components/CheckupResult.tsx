@@ -1,16 +1,23 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { EmotionalCheckupResult } from "@/types/emotionalCheckup";
+import type { AppScreen } from "@/pages/Index";
 
 interface CheckupResultProps {
   result: EmotionalCheckupResult;
+  onNavigate?: (screen: AppScreen) => void;
 }
 
-export const CheckupResult = ({ result }: CheckupResultProps) => {
+export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
   const { t } = useLanguage();
+
+  const handleSOSClick = () => {
+    if (onNavigate) {
+      onNavigate("sos");
+    }
+  };
 
   return (
     <Card className={`p-6 bg-gradient-to-r ${result.color} border-0 text-white`}>
@@ -23,18 +30,19 @@ export const CheckupResult = ({ result }: CheckupResultProps) => {
         
         <div className="space-y-3">
           <Button 
-            onClick={() => toast(t('bookingFeature'))}
+            onClick={() => {/* TODO: Implement booking modal */}}
             className="w-full bg-white/20 hover:bg-white/30"
           >
             {t('bookSession')}
           </Button>
-          <Button 
-            onClick={() => toast(t('greatProgress'))}
-            variant="outline"
-            className="w-full border-white text-white hover:bg-white/10"
-          >
-            {t('tryTechnique')}
-          </Button>
+          {result.color === "from-red-500 to-red-600" && (
+            <Button 
+              onClick={handleSOSClick}
+              className="w-full bg-slate-800 text-white hover:bg-slate-700 border-2 border-white/20"
+            >
+              {t('tryTechnique')}
+            </Button>
+          )}
         </div>
       </div>
     </Card>

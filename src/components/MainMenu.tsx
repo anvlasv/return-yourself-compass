@@ -72,27 +72,27 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
         </div>
 
         {/* Menu Cards */}
-        <div className="space-y-4 pb-8">
+        <div className="grid grid-cols-1 gap-4 pb-8">
           {menuItems.map((item) => {
             const IconComponent = item.icon;
             return (
               <Card
                 key={item.id}
-                className={`p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl bg-gradient-to-r ${item.color} border-0 ${
+                className={`h-24 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl bg-gradient-to-r ${item.color} border-0 ${
                   item.urgent ? 'ring-2 ring-white/20' : ''
                 }`}
                 onClick={() => onNavigate(item.id)}
               >
-                <div className="flex items-start space-x-4">
-                  <div className="bg-white/20 p-3 rounded-lg">
+                <div className="h-full flex items-center p-4">
+                  <div className="bg-white/20 p-3 rounded-lg flex-shrink-0">
                     <IconComponent className="h-6 w-6 text-white" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white mb-1">
-                      {t(item.titleKey)}
-                      {item.urgent && <span className="ml-2 text-xs bg-white/30 px-2 py-1 rounded-full">{t('urgent')}</span>}
+                  <div className="flex-1 ml-4 min-w-0">
+                    <h3 className="text-lg font-semibold text-white mb-1 flex items-center">
+                      <span className="truncate">{t(item.titleKey)}</span>
+                      {item.urgent && <span className="ml-2 text-xs bg-white/30 px-2 py-1 rounded-full flex-shrink-0">{t('urgent')}</span>}
                     </h3>
-                    <p className="text-white/80 text-sm">{t(item.descriptionKey)}</p>
+                    <p className="text-white/80 text-sm line-clamp-2">{t(item.descriptionKey)}</p>
                   </div>
                 </div>
               </Card>

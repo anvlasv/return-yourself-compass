@@ -5,7 +5,7 @@ interface CheckupProgressProps {
 }
 
 export const CheckupProgress = ({ currentQuestion, totalQuestions }: CheckupProgressProps) => {
-  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+  const progress = (currentQuestion / totalQuestions) * 100;
   
   return (
     <div className="mb-8">

@@ -36,7 +36,7 @@ const Index = () => {
       case "book":
         return <BookSession onBack={handleBack} />;
       case "checkup":
-        return <EmotionalCheckup onBack={handleBack} />;
+        return <EmotionalCheckup onBack={handleBack} onNavigate={handleNavigate} />;
       case "read":
         return <ReadListen onBack={handleBack} />;
       case "sos":
