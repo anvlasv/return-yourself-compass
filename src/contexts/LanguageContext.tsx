@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LanguageContextType {
@@ -143,7 +144,24 @@ const translations = {
     completedFirst: "Completed your first emotional check-up",
     activeForWeek: "Active for a week straight",
     used5SOSTools: "Used 5 different SOS tools",
-    viewDetailedReport: "View Detailed Report"
+    viewDetailedReport: "View Detailed Report",
+    helpfulContent: "Helpful content for your well-being",
+    wantMoreContent: "Want more personalized content?",
+    personalizedResources: "Get resources tailored to your needs",
+    requestSession: "Request a Session",
+    savedToReading: "Saved to your reading list",
+    describeRequest: "Describe your request",
+    feelingOverwhelmedPlaceholder: "I'm feeling overwhelmed and need support with...",
+    chooseFormat: "Choose format",
+    online: "Online",
+    inPerson: "In Person",
+    selectDate: "Select date",
+    selectTime: "Select time",
+    pleaseSelect: "Please fill in all fields",
+    sessionBooked: "Session successfully booked!",
+    bookSessionBtn: "Book Session",
+    cancel: "Cancel",
+    confirm: "Confirm"
   },
   ru: {
     // Hero Section
@@ -279,7 +297,24 @@ const translations = {
     completedFirst: "Завершили первую эмоциональную диагностику",
     activeForWeek: "Активны в течение недели подряд",
     used5SOSTools: "Использовали 5 различных SOS инструментов",
-    viewDetailedReport: "Посмотреть подробный отчет"
+    viewDetailedReport: "Посмотреть подробный отчет",
+    helpfulContent: "Полезный контент для вашего благополучия",
+    wantMoreContent: "Хотите больше персонализированного контента?",
+    personalizedResources: "Получите ресурсы, адаптированные под ваши потребности",
+    requestSession: "Запросить сессию",
+    savedToReading: "Сохранено в список для чтения",
+    describeRequest: "Опишите ваш запрос",
+    feelingOverwhelmedPlaceholder: "Я чувствую себя подавленным и нуждаюсь в поддержке с...",
+    chooseFormat: "Выберите формат",
+    online: "Онлайн",
+    inPerson: "Лично",
+    selectDate: "Выберите дату",
+    selectTime: "Выберите время",
+    pleaseSelect: "Пожалуйста, заполните все поля",
+    sessionBooked: "Сессия успешно забронирована!",
+    bookSessionBtn: "Забронировать сессию",
+    cancel: "Отмена",
+    confirm: "Подтвердить"
   }
 };
 

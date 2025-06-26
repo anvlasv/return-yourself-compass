@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SessionBookingModal } from "@/components/SessionBookingModal";
 import { EmotionalCheckupResult } from "@/types/emotionalCheckup";
 import type { AppScreen } from "@/pages/Index";
 
@@ -14,16 +14,12 @@ interface CheckupResultProps {
 
 export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
   const { t } = useLanguage();
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   const handleSOSClick = () => {
     if (onNavigate) {
       onNavigate("sos");
     }
-  };
-
-  const handleBookingClick = () => {
-    setIsBookingOpen(true);
   };
 
   return (
@@ -36,26 +32,12 @@ export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
         </p>
         
         <div className="space-y-3">
-          <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
-            <DialogTrigger asChild>
-              <Button 
-                onClick={handleBookingClick}
-                className="w-full bg-white/20 hover:bg-white/30"
-              >
-                {t('bookSession')}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-slate-800 border-slate-700">
-              <DialogHeader>
-                <DialogTitle className="text-white">{t('bookingFeature')}</DialogTitle>
-              </DialogHeader>
-              <div className="p-4">
-                <p className="text-slate-300 text-center">
-                  {t('bookingFeature')}
-                </p>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Button 
+            onClick={() => setIsBookingModalOpen(true)}
+            className="w-full bg-white/20 hover:bg-white/30"
+          >
+            {t('bookSession')}
+          </Button>
 
           <Button 
             onClick={handleSOSClick}
@@ -65,6 +47,11 @@ export const CheckupResult = ({ result, onNavigate }: CheckupResultProps) => {
           </Button>
         </div>
       </div>
+
+      <SessionBookingModal 
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
     </Card>
   );
 };

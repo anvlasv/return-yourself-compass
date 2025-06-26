@@ -19,6 +19,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
   const [selectedFormat, setSelectedFormat] = useState<"online" | "offline" | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const timeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
@@ -28,19 +29,57 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
   // Имитация забронированных слотов
   const bookedSlots = ["10:00", "14:00", "16:00"];
 
-  const handleSubmit = () => {
+  const sendToTelegram = async (bookingData: any) => {
+    // Имитация отправки в Telegram
+    console.log("Отправка в Telegram:", bookingData);
+    // В реальном приложении здесь был бы API вызов
+    return new Promise(resolve => setTimeout(resolve, 1000));
+  };
+
+  const addToGoogleCalendar = async (bookingData: any) => {
+    // Имитация добавления в Google Calendar
+    console.log("Добавление в Google Calendar:", bookingData);
+    // В реальном приложении здесь был бы API вызов к Google Calendar API
+    return new Promise(resolve => setTimeout(resolve, 1000));
+  };
+
+  const handleConfirm = async () => {
     if (!description.trim() || !selectedFormat || !selectedDate || !selectedTime) {
       toast(t('pleaseSelect'));
       return;
     }
     
-    toast(t('sessionBooked'));
-    onClose();
-    // Сброс формы
-    setDescription("");
-    setSelectedFormat(null);
-    setSelectedDate("");
-    setSelectedTime("");
+    setIsSubmitting(true);
+    
+    try {
+      const bookingData = {
+        description: description.trim(),
+        format: selectedFormat,
+        date: selectedDate,
+        time: selectedTime,
+        timestamp: new Date().toISOString()
+      };
+
+      // Отправка данных в Telegram психологу
+      await sendToTelegram(bookingData);
+      
+      // Добавление записи в Google Calendar
+      await addToGoogleCalendar(bookingData);
+      
+      toast(t('sessionBooked'));
+      onClose();
+      
+      // Сброс формы
+      setDescription("");
+      setSelectedFormat(null);
+      setSelectedDate("");
+      setSelectedTime("");
+    } catch (error) {
+      console.error("Ошибка при бронировании:", error);
+      toast("Произошла ошибка при бронировании. Попробуйте еще раз.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -144,16 +183,17 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
           {/* Кнопки */}
           <div className="flex space-x-3 pt-4">
             <Button 
-              onClick={handleSubmit}
+              onClick={handleConfirm}
               className="flex-1 bg-blue-500 hover:bg-blue-600"
-              disabled={!description.trim() || !selectedFormat || !selectedDate || !selectedTime}
+              disabled={!description.trim() || !selectedFormat || !selectedDate || !selectedTime || isSubmitting}
             >
-              {t('bookSessionBtn')}
+              {isSubmitting ? "Отправка..." : t('confirm')}
             </Button>
             <Button 
               onClick={onClose}
               variant="outline"
               className="border-slate-600 text-white hover:bg-slate-700"
+              disabled={isSubmitting}
             >
               {t('cancel')}
             </Button>
