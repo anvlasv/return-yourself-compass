@@ -10,24 +10,26 @@ interface CheckupQuestionProps {
 
 export const CheckupQuestion = ({ question, onAnswer }: CheckupQuestionProps) => {
   return (
-    <Card className="p-6 bg-slate-800 border-slate-700 mb-6">
-      <h3 className="text-xl font-semibold text-white text-center mb-8 break-words">
-        {question.question}
-      </h3>
+    <div className="space-y-6">
+      <Card className="p-6 bg-white/10 backdrop-blur-sm border-white/20 border">
+        <h3 className="text-xl font-semibold text-white text-center leading-relaxed">
+          {question.question}
+        </h3>
+      </Card>
       
-      <div className="space-y-4">
+      <div className="grid gap-3">
         {question.options.map((option, index) => (
           <Button
             key={index}
             onClick={() => onAnswer(option.value)}
             variant="outline"
-            className="w-full p-6 h-auto border-slate-600 bg-slate-700 hover:bg-slate-600 text-white justify-start break-words"
+            className="w-full p-4 h-auto border-white/30 bg-white/5 hover:bg-white/15 text-white justify-start transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
-            <span className="text-2xl mr-4 flex-shrink-0">{option.emoji}</span>
-            <span className="text-lg text-left">{option.text}</span>
+            <span className="text-2xl mr-3 flex-shrink-0">{option.emoji}</span>
+            <span className="text-base text-left leading-relaxed">{option.text}</span>
           </Button>
         ))}
       </div>
-    </Card>
+    </div>
   );
 };

@@ -29,9 +29,13 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
     setAnswers(newAnswers);
 
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion + 1);
+      }, 300);
     } else {
-      setShowResult(true);
+      setTimeout(() => {
+        setShowResult(true);
+      }, 300);
     }
   };
 
@@ -45,7 +49,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
           <Button 
             variant="ghost" 
             onClick={onBack}
-            className="text-white mb-6"
+            className="text-white hover:bg-white/10 mb-6 transition-colors duration-200"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t('backToMenu')}
@@ -65,7 +69,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-white mb-6"
+          className="text-white hover:bg-white/10 mb-6 transition-colors duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToMenu')}

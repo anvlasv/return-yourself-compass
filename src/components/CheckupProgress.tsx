@@ -8,19 +8,19 @@ interface CheckupProgressProps {
 
 export const CheckupProgress = ({ currentQuestion, totalQuestions }: CheckupProgressProps) => {
   const { t } = useLanguage();
-  const progress = (currentQuestion / totalQuestions) * 100;
+  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
   
   return (
-    <div className="mb-8">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-slate-300 text-sm">
-          {t('language') === 'ru' ? `Вопрос ${currentQuestion + 1} из ${totalQuestions}` : `Question ${currentQuestion + 1} of ${totalQuestions}`}
+    <div className="mb-6">
+      <div className="flex justify-between items-center mb-3">
+        <span className="text-white/80 text-sm font-medium">
+          {currentQuestion + 1} / {totalQuestions}
         </span>
-        <span className="text-slate-300 text-sm">{Math.round(progress)}%</span>
+        <span className="text-white/80 text-sm font-medium">{Math.round(progress)}%</span>
       </div>
-      <div className="w-full bg-slate-700 rounded-full h-2">
+      <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
         <div 
-          className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+          className="bg-gradient-to-r from-blue-400 to-cyan-400 h-full rounded-full transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>

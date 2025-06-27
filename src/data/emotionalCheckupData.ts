@@ -4,47 +4,54 @@ import { EmotionalCheckupQuestion } from "@/types/emotionalCheckup";
 export const getEmotionalCheckupQuestions = (t: (key: string) => string): EmotionalCheckupQuestion[] => [
   {
     id: 1,
-    question: t('howAreYouSleeping'),
+    question: t('howAreYouToday'),
     options: [
-      { text: t('sleepingWell'), value: 3, emoji: "😴" },
-      { text: t('someDifficulty'), value: 2, emoji: "😪" },
-      { text: t('veryPoorly'), value: 1, emoji: "😵" }
+      { text: t('feelGreat'), value: 5, emoji: "😊" },
+      { text: t('feelGood'), value: 4, emoji: "🙂" },
+      { text: t('feelOkay'), value: 3, emoji: "😐" },
+      { text: t('feelBad'), value: 2, emoji: "😔" },
+      { text: t('feelTerrible'), value: 1, emoji: "😰" }
     ]
   },
   {
     id: 2,
-    question: t('howOftenThinkAboutHer'),
+    question: t('howIsYourSleep'),
     options: [
-      { text: t('rarely'), value: 3, emoji: "🙂" },
-      { text: t('sometimes'), value: 2, emoji: "😔" },
-      { text: t('constantly'), value: 1, emoji: "😰" }
+      { text: t('sleepWell'), value: 5, emoji: "😴" },
+      { text: t('sleepOkay'), value: 4, emoji: "😌" },
+      { text: t('sleepPoor'), value: 2, emoji: "😪" },
+      { text: t('sleepBad'), value: 1, emoji: "😵" }
     ]
   },
   {
     id: 3,
-    question: t('howIsEnergyLevel'),
+    question: t('stressLevel'),
     options: [
-      { text: t('goodEnergy'), value: 3, emoji: "⚡" },
-      { text: t('lowEnergy'), value: 2, emoji: "🔋" },
-      { text: t('exhausted'), value: 1, emoji: "😴" }
+      { text: t('noStress'), value: 5, emoji: "😌" },
+      { text: t('lightStress'), value: 4, emoji: "🤔" },
+      { text: t('moderateStress'), value: 3, emoji: "😟" },
+      { text: t('highStress'), value: 2, emoji: "😰" },
+      { text: t('extremeStress'), value: 1, emoji: "🥵" }
     ]
   },
   {
     id: 4,
-    question: t('takingCareOfYourself'),
+    question: t('socialConnections'),
     options: [
-      { text: t('yesRegularly'), value: 3, emoji: "💪" },
-      { text: t('sometimes'), value: 2, emoji: "🤷" },
-      { text: t('notReally'), value: 1, emoji: "😞" }
+      { text: t('goodConnections'), value: 5, emoji: "🤝" },
+      { text: t('someConnections'), value: 4, emoji: "👋" },
+      { text: t('limitedConnections'), value: 2, emoji: "😐" },
+      { text: t('noConnections'), value: 1, emoji: "😞" }
     ]
   },
   {
     id: 5,
-    question: t('howFeelAboutFuture'),
+    question: t('copingAbility'),
     options: [
-      { text: t('hopeful'), value: 3, emoji: "🌅" },
-      { text: t('uncertain'), value: 2, emoji: "🤔" },
-      { text: t('hopeless'), value: 1, emoji: "🌧️" }
+      { text: t('copingWell'), value: 5, emoji: "💪" },
+      { text: t('copingOkay'), value: 4, emoji: "👌" },
+      { text: t('copingPoor'), value: 2, emoji: "🤷" },
+      { text: t('notCoping'), value: 1, emoji: "😓" }
     ]
   }
 ];
