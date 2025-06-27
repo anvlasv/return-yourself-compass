@@ -21,7 +21,11 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
   const [selectedAudioItem, setSelectedAudioItem] = useState<ContentItem | null>(null);
   const [selectedArticleItem, setSelectedArticleItem] = useState<ContentItem | null>(null);
 
+  console.log('ReadListen rendered, content:', content);
+  console.log('Language:', language);
+
   const handleContentClick = (item: ContentItem) => {
+    console.log('Content clicked:', item);
     if (item.type === 'audio') {
       setSelectedAudioItem(item);
       toast(`Загружается аудио "${item.title}"...`);
@@ -36,19 +40,25 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
   };
 
   return (
-    <div className="min-h-screen p-4 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4">
       <div className="max-w-md mx-auto">
         <ReadListenHeader onBack={onBack} />
 
         <div className="space-y-4 pb-8">
-          {content.map((item) => (
-            <ContentCard
-              key={item.id}
-              item={item}
-              onContentClick={handleContentClick}
-              onBookmark={handleBookmark}
-            />
-          ))}
+          {content && content.length > 0 ? (
+            content.map((item) => (
+              <ContentCard
+                key={item.id}
+                item={item}
+                onContentClick={handleContentClick}
+                onBookmark={handleBookmark}
+              />
+            ))
+          ) : (
+            <div className="text-white text-center py-8">
+              <p>Контент загружается...</p>
+            </div>
+          )}
         </div>
 
         <ReadListenFooter onRequestSession={() => setIsBookingModalOpen(true)} />
@@ -58,17 +68,21 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
           onClose={() => setIsBookingModalOpen(false)}
         />
 
-        <AudioPlayerModal
-          isOpen={!!selectedAudioItem}
-          onClose={() => setSelectedAudioItem(null)}
-          item={selectedAudioItem!}
-        />
+        {selectedAudioItem && (
+          <AudioPlayerModal
+            isOpen={!!selectedAudioItem}
+            onClose={() => setSelectedAudioItem(null)}
+            item={selectedAudioItem}
+          />
+        )}
 
-        <TelegraphArticleModal
-          isOpen={!!selectedArticleItem}
-          onClose={() => setSelectedArticleItem(null)}
-          item={selectedArticleItem!}
-        />
+        {selectedArticleItem && (
+          <TelegraphArticleModal
+            isOpen={!!selectedArticleItem}
+            onClose={() => setSelectedArticleItem(null)}
+            item={selectedArticleItem}
+          />
+        )}
       </div>
     </div>
   );

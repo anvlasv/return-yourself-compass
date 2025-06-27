@@ -11,9 +11,11 @@ interface ContentCardProps {
 }
 
 export const ContentCard = ({ item, onContentClick, onBookmark }: ContentCardProps) => {
+  console.log('ContentCard rendered:', item);
+  
   return (
     <Card
-      className={`p-5 bg-gradient-to-r ${item.color} border-0 cursor-pointer hover:scale-105 transition-all duration-300`}
+      className={`p-5 bg-gradient-to-r ${item.color} border-0 cursor-pointer hover:scale-105 transition-all duration-300 shadow-lg`}
       onClick={() => onContentClick(item)}
     >
       <div className="flex items-start justify-between">
@@ -22,16 +24,16 @@ export const ContentCard = ({ item, onContentClick, onBookmark }: ContentCardPro
             <span className="text-2xl mr-2">
               {item.type === "article" ? "📖" : "🎧"}
             </span>
-            <span className="text-xs bg-white/30 px-2 py-1 rounded-full text-white">
+            <span className="text-xs bg-white/30 px-2 py-1 rounded-full text-white font-medium">
               {item.category}
             </span>
           </div>
           
-          <h3 className="text-lg font-semibold text-white mb-2">
+          <h3 className="text-lg font-semibold text-white mb-2 leading-tight">
             {item.title}
           </h3>
           
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white/80 text-sm mb-3 leading-relaxed">
             {item.description}
           </p>
           
@@ -48,7 +50,7 @@ export const ContentCard = ({ item, onContentClick, onBookmark }: ContentCardPro
                 e.stopPropagation();
                 onBookmark(item);
               }}
-              className="text-white hover:bg-white/20 p-1"
+              className="text-white hover:bg-white/20 p-2 rounded-full transition-colors"
             >
               <Bookmark className="h-4 w-4" />
             </Button>
