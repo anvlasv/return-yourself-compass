@@ -5,6 +5,8 @@ import { SessionBookingModal } from "@/components/SessionBookingModal";
 import { ReadListenHeader } from "@/components/ReadListenHeader";
 import { ReadListenFooter } from "@/components/ReadListenFooter";
 import { ContentCard } from "@/components/ContentCard";
+import { AudioPlayerModal } from "@/components/AudioPlayerModal";
+import { TelegraphArticleModal } from "@/components/TelegraphArticleModal";
 import { contentEn, contentRu, ContentItem } from "@/data/readListenContent";
 import { toast } from "sonner";
 
@@ -16,9 +18,17 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
   const { t, language } = useLanguage();
   const content = language === 'ru' ? contentRu : contentEn;
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [selectedAudioItem, setSelectedAudioItem] = useState<ContentItem | null>(null);
+  const [selectedArticleItem, setSelectedArticleItem] = useState<ContentItem | null>(null);
 
   const handleContentClick = (item: ContentItem) => {
-    toast(`Открывается "${item.title}"...`);
+    if (item.type === 'audio') {
+      setSelectedAudioItem(item);
+      toast(`Загружается аудио "${item.title}"...`);
+    } else if (item.type === 'article') {
+      setSelectedArticleItem(item);
+      toast(`Подготавливается статья "${item.title}"...`);
+    }
   };
 
   const handleBookmark = (item: ContentItem) => {
@@ -46,6 +56,18 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
         <SessionBookingModal 
           isOpen={isBookingModalOpen}
           onClose={() => setIsBookingModalOpen(false)}
+        />
+
+        <AudioPlayerModal
+          isOpen={!!selectedAudioItem}
+          onClose={() => setSelectedAudioItem(null)}
+          item={selectedAudioItem!}
+        />
+
+        <TelegraphArticleModal
+          isOpen={!!selectedArticleItem}
+          onClose={() => setSelectedArticleItem(null)}
+          item={selectedArticleItem!}
         />
       </div>
     </div>
