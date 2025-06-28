@@ -20,6 +20,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
+  const [hasAnsweredCurrent, setHasAnsweredCurrent] = useState(false);
 
   const questions = getEmotionalCheckupQuestions(t);
 
@@ -27,10 +28,12 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = value;
     setAnswers(newAnswers);
+    setHasAnsweredCurrent(true);
 
     if (currentQuestion < questions.length - 1) {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
+        setHasAnsweredCurrent(false);
       }, 300);
     } else {
       setTimeout(() => {
@@ -78,6 +81,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
         <CheckupProgress 
           currentQuestion={currentQuestion} 
           totalQuestions={questions.length}
+          hasAnswered={hasAnsweredCurrent}
         />
 
         <CheckupQuestion 

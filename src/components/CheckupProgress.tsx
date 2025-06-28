@@ -4,11 +4,16 @@ import { useLanguage } from "@/contexts/LanguageContext";
 interface CheckupProgressProps {
   currentQuestion: number;
   totalQuestions: number;
+  hasAnswered?: boolean;
 }
 
-export const CheckupProgress = ({ currentQuestion, totalQuestions }: CheckupProgressProps) => {
+export const CheckupProgress = ({ currentQuestion, totalQuestions, hasAnswered = false }: CheckupProgressProps) => {
   const { t } = useLanguage();
-  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+  
+  // Логика прогресса: 0% в начале, увеличивается после каждого ответа
+  const progress = hasAnswered 
+    ? ((currentQuestion + 1) / totalQuestions) * 100 
+    : (currentQuestion / totalQuestions) * 100;
   
   return (
     <div className="mb-6">
