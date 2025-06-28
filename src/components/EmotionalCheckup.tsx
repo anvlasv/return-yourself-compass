@@ -47,18 +47,23 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   if (showResult) {
     const result = getCheckupResult(getTotalScore(), t);
     return (
-      <div className="min-h-screen p-4 pt-6">
-        <div className="max-w-md mx-auto">
+      <div className="min-h-screen pb-20">
+        {/* Fixed back button */}
+        <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 border-b border-white/10">
           <Button 
             variant="ghost" 
             onClick={onBack}
-            className="text-white hover:bg-white/10 mb-4 transition-colors duration-200"
+            className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t('backToMenu')}
           </Button>
+        </div>
 
-          <CheckupResult result={result} onNavigate={onNavigate} />
+        <div className="pt-20 p-4">
+          <div className="max-w-md mx-auto">
+            <CheckupResult result={result} onNavigate={onNavigate} />
+          </div>
         </div>
       </div>
     );
@@ -67,27 +72,32 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   const question = questions[currentQuestion];
   
   return (
-    <div className="min-h-screen p-4 pt-6">
-      <div className="max-w-md mx-auto">
+    <div className="min-h-screen pb-20">
+      {/* Fixed back button */}
+      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 border-b border-white/10">
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-white hover:bg-white/10 mb-4 transition-colors duration-200"
+          className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToMenu')}
         </Button>
+      </div>
 
-        <CheckupProgress 
-          currentQuestion={currentQuestion} 
-          totalQuestions={questions.length}
-          hasAnswered={hasAnsweredCurrent}
-        />
+      <div className="pt-20 p-4">
+        <div className="max-w-md mx-auto">
+          <CheckupProgress 
+            currentQuestion={currentQuestion} 
+            totalQuestions={questions.length}
+            hasAnswered={hasAnsweredCurrent}
+          />
 
-        <CheckupQuestion 
-          question={question}
-          onAnswer={handleAnswer}
-        />
+          <CheckupQuestion 
+            question={question}
+            onAnswer={handleAnswer}
+          />
+        </div>
       </div>
     </div>
   );
