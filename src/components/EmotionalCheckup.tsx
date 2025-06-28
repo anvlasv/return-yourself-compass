@@ -49,7 +49,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
     return (
       <div className="min-h-screen pb-20">
         {/* Fixed back button */}
-        <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 border-b border-white/10">
+        <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
           <Button 
             variant="ghost" 
             onClick={onBack}
@@ -60,7 +60,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
           </Button>
         </div>
 
-        <div className="pt-20 p-4">
+        <div className="pt-16 p-4">
           <div className="max-w-md mx-auto">
             <CheckupResult result={result} onNavigate={onNavigate} />
           </div>
@@ -74,7 +74,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   return (
     <div className="min-h-screen pb-20">
       {/* Fixed back button */}
-      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 border-b border-white/10">
+      <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -85,7 +85,7 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
         </Button>
       </div>
 
-      <div className="pt-20 p-4">
+      <div className="pt-16 p-4">
         <div className="max-w-md mx-auto">
           <CheckupProgress 
             currentQuestion={currentQuestion} 

@@ -34,7 +34,7 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
   return (
     <div className="min-h-screen pb-20">
       {/* Fixed back button */}
-      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 border-b border-white/10">
+      <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -45,21 +45,12 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
         </Button>
       </div>
 
-      <div className="pt-20 p-4">
+      <div className="pt-16 p-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-white mb-2">{t('bookSession')}</h2>
             <p className="text-slate-300">{t('professionalSupport')}</p>
           </div>
-
-          <Card className="p-4 bg-gradient-to-r from-green-500 to-green-600 border-0 mb-6">
-            <div className="text-center text-white">
-              <h3 className="font-semibold mb-1">{t('firstSessionFree')}</h3>
-              <p className="text-sm text-green-100">
-                {t('freeConsultation')}
-              </p>
-            </div>
-          </Card>
 
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-white mb-4">{t('chooseFormat')}</h3>

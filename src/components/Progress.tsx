@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -77,7 +76,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
   return (
     <div className="min-h-screen pb-20">
       {/* Fixed back button */}
-      <div className="fixed top-14 left-0 right-0 z-30 p-4">
+      <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -88,7 +87,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
         </Button>
       </div>
 
-      <div className="pt-20 p-4">
+      <div className="pt-16 p-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">{t('yourProgressTitle')}</h2>
