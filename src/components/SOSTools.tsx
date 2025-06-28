@@ -87,16 +87,19 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     return (
       <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
         <div className="max-w-md mx-auto">
-          <Button 
-            variant="ghost" 
-            onClick={stopBreathing}
-            className="text-white mb-4"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('stopExercise')}
-          </Button>
+          {/* Fixed back button */}
+          <div className="fixed top-14 left-0 right-0 z-30 p-4">
+            <Button 
+              variant="ghost" 
+              onClick={stopBreathing}
+              className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('stopExercise')}
+            </Button>
+          </div>
 
-          <div className="text-center">
+          <div className="pt-20 text-center">
             <div className="mb-8">
               <div 
                 className={`w-32 h-32 mx-auto rounded-full border-4 border-blue-400 flex items-center justify-center text-white text-6xl transition-all duration-1000 ${
@@ -150,97 +153,107 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     return (
       <div className="min-h-screen p-4 pt-6">
         <div className="max-w-md mx-auto">
-          <Button 
-            variant="ghost" 
-            onClick={() => setActiveExercise(null)}
-            className="text-white mb-4"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('backToTools')}
-          </Button>
+          {/* Fixed back button */}
+          <div className="fixed top-14 left-0 right-0 z-30 p-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => setActiveExercise(null)}
+              className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('backToTools')}
+            </Button>
+          </div>
 
-          <Card className="p-6 bg-slate-800 border-slate-700">
-            <h3 className="text-xl font-bold text-white text-center mb-6">
-              {t('groundingExerciseTitle')}
-            </h3>
-            
-            <div className="space-y-4">
-              {groundingSteps.map((step, index) => (
-                <div key={index} className="p-4 bg-slate-700 rounded-lg">
-                  <p className="text-white text-lg">{step}</p>
-                </div>
-              ))}
-            </div>
+          <div className="pt-20">
+            <Card className="p-6 bg-slate-800 border-slate-700">
+              <h3 className="text-xl font-bold text-white text-center mb-6">
+                {t('groundingExerciseTitle')}
+              </h3>
+              
+              <div className="space-y-4">
+                {groundingSteps.map((step, index) => (
+                  <div key={index} className="p-4 bg-slate-700 rounded-lg">
+                    <p className="text-white text-lg">{step}</p>
+                  </div>
+                ))}
+              </div>
 
-            <div className="mt-8 text-center">
-              <Button 
-                onClick={() => setActiveExercise(null)}
-                className="bg-green-500 hover:bg-green-600"
-              >
-                {t('imMoreGrounded')}
-              </Button>
-            </div>
-          </Card>
+              <div className="mt-8 text-center">
+                <Button 
+                  onClick={() => setActiveExercise(null)}
+                  className="bg-green-500 hover:bg-green-600"
+                >
+                  {t('imMoreGrounded')}
+                </Button>
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 pt-6">
-      <div className="max-w-md mx-auto">
+    <div className="min-h-screen pb-20">
+      {/* Fixed back button */}
+      <div className="fixed top-14 left-0 right-0 z-30 p-4">
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-white mb-4"
+          className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToMenu')}
         </Button>
+      </div>
 
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-white mb-2">{t('sosToolsTitle')}</h2>
-          <p className="text-slate-300">{t('quickReliefOverwhelmed')}</p>
-        </div>
+      <div className="pt-20 p-4">
+        <div className="max-w-md mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">{t('sosToolsTitle')}</h2>
+            <p className="text-slate-300">{t('quickReliefOverwhelmed')}</p>
+          </div>
 
-        <div className="space-y-4">
-          {exercises.map((exercise) => (
-            <Card
-              key={exercise.id}
-              className="p-6 bg-slate-800 border-slate-700 hover:bg-slate-700 transition-colors cursor-pointer"
-              onClick={() => {
-                if (exercise.id === "breathing") {
-                  startBreathing();
-                } else if (exercise.id === "grounding") {
-                  setActiveExercise("grounding");
-                } else {
-                  // For writing and movement, show coming soon
-                  setActiveExercise(exercise.id);
-                }
-              }}
-            >
-              <div className="flex items-center space-x-4">
-                <div className="text-4xl">{exercise.icon}</div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-1">
-                    {exercise.title}
-                  </h3>
-                  <p className="text-slate-300 text-sm mb-3">
-                    {exercise.description}
-                  </p>
-                  <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
-                    {exercise.action}
-                  </Button>
+          <div className="space-y-4">
+            {exercises.map((exercise) => (
+              <Card
+                key={exercise.id}
+                className="p-6 bg-slate-800 border-slate-700 hover:bg-slate-700 transition-colors cursor-pointer"
+                onClick={() => {
+                  if (exercise.id === "breathing") {
+                    startBreathing();
+                  } else if (exercise.id === "grounding") {
+                    setActiveExercise("grounding");
+                  } else {
+                    // For writing and movement, show coming soon
+                    setActiveExercise(exercise.id);
+                  }
+                }}
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="text-4xl">{exercise.icon}</div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {exercise.title}
+                    </h3>
+                    <p className="text-slate-300 text-sm mb-3">
+                      {exercise.description}
+                    </p>
+                    <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
+                      {exercise.action}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+              </Card>
+            ))}
+          </div>
 
-        <div className="mt-8 p-4 bg-orange-500/20 border border-orange-500/30 rounded-lg">
-          <p className="text-orange-200 text-sm text-center">
-            {t('crisisHelplineWarning')}
-          </p>
+          <div className="mt-8 p-4 bg-orange-500/20 border border-orange-500/30 rounded-lg">
+            <p className="text-orange-200 text-sm text-center">
+              {t('crisisHelplineWarning')}
+            </p>
+          </div>
         </div>
       </div>
     </div>

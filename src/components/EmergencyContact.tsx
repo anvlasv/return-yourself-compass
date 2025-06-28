@@ -60,105 +60,110 @@ export const EmergencyContact = ({ onBack }: EmergencyContactProps) => {
   }
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="max-w-md mx-auto pt-8">
+    <div className="min-h-screen pb-20">
+      {/* Fixed back button */}
+      <div className="fixed top-14 left-0 right-0 z-30 p-4">
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-white hover:bg-white/10 mb-6 transition-colors duration-200"
+          className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToMenu')}
         </Button>
+      </div>
 
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">{t('emergencyContactTitle')}</h2>
-          <p className="text-white/80">{t('needImmediateHelp')}</p>
-        </div>
-
-        {/* Crisis Warning */}
-        <Card className="p-4 bg-red-500/20 border border-red-500/40 backdrop-blur-sm mb-6">
-          <div className="flex items-start space-x-3">
-            <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-            <p className="text-red-200 text-sm leading-relaxed">
-              {t('crisisWarningMessage')}
-            </p>
+      <div className="pt-20 p-4">
+        <div className="max-w-md mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-white mb-2">{t('emergencyContactTitle')}</h2>
+            <p className="text-white/80">{t('needImmediateHelp')}</p>
           </div>
-        </Card>
 
-        {/* Message Input */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-white mb-4">{t('tellUsWhatsHappening')}</h3>
-          <Textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder={t('feelingOverwhelmedBecause')}
-            className="min-h-[120px] bg-white/10 border-white/30 text-white placeholder:text-white/60 resize-none backdrop-blur-sm"
-          />
-        </div>
+          {/* Crisis Warning */}
+          <Card className="p-4 bg-red-500/20 border border-red-500/40 backdrop-blur-sm mb-6">
+            <div className="flex items-start space-x-3">
+              <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-red-200 text-sm leading-relaxed">
+                {t('crisisWarningMessage')}
+              </p>
+            </div>
+          </Card>
 
-        {/* Contact Method */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-white mb-4">{t('howToContactYou')}</h3>
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              { id: "telegram", label: t('telegram'), icon: "💬" },
-              { id: "phone", label: t('phone'), icon: "📞" },
-              { id: "email", label: t('email'), icon: "📧" }
-            ].map((method) => (
-              <Button
-                key={method.id}
-                variant={contactMethod === method.id ? "default" : "outline"}
-                size="sm"
-                onClick={() => setContactMethod(method.id as any)}
-                className={
-                  contactMethod === method.id 
-                    ? "bg-blue-500 hover:bg-blue-600 text-white" 
-                    : "border-white/30 bg-white/5 text-white hover:bg-white/15 backdrop-blur-sm"
-                }
-              >
-                <span className="mr-1">{method.icon}</span>
-                {method.label}
-              </Button>
-            ))}
+          {/* Message Input */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-white mb-4">{t('tellUsWhatsHappening')}</h3>
+            <Textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t('feelingOverwhelmedBecause')}
+              className="min-h-[120px] bg-white/10 border-white/30 text-white placeholder:text-white/60 resize-none backdrop-blur-sm"
+            />
           </div>
-        </div>
 
-        {/* Response Time */}
-        <div className="mb-8">
-          <h3 className="text-lg font-semibold text-white mb-4">{t('whenNeedResponse')}</h3>
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              { id: "1h", label: t('within1Hour'), urgent: true },
-              { id: "4h", label: t('within4Hours'), urgent: false },
-              { id: "12h", label: t('within12Hours'), urgent: false }
-            ].map((time) => (
-              <Button
-                key={time.id}
-                variant={responseTime === time.id ? "default" : "outline"}
-                size="sm"
-                onClick={() => setResponseTime(time.id as any)}
-                className={
-                  responseTime === time.id 
-                    ? time.urgent ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
-                    : "border-white/30 bg-white/5 text-white hover:bg-white/15 backdrop-blur-sm"
-                }
-              >
-                <Clock className="mr-1 h-3 w-3" />
-                {time.label}
-              </Button>
-            ))}
+          {/* Contact Method */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-white mb-4">{t('howToContactYou')}</h3>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { id: "telegram", label: t('telegram'), icon: "💬" },
+                { id: "phone", label: t('phone'), icon: "📞" },
+                { id: "email", label: t('email'), icon: "📧" }
+              ].map((method) => (
+                <Button
+                  key={method.id}
+                  variant={contactMethod === method.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setContactMethod(method.id as any)}
+                  className={
+                    contactMethod === method.id 
+                      ? "bg-blue-500 hover:bg-blue-600 text-white" 
+                      : "border-white/30 bg-white/5 text-white hover:bg-white/15 backdrop-blur-sm"
+                  }
+                >
+                  <span className="mr-1">{method.icon}</span>
+                  {method.label}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <Button 
-          onClick={handleSubmit}
-          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-4 text-lg transition-all duration-200 hover:scale-[1.02]"
-          disabled={!message.trim()}
-        >
-          <Send className="mr-2 h-5 w-5" />
-          {t('sendRequest')}
-        </Button>
+          {/* Response Time */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-white mb-4">{t('whenNeedResponse')}</h3>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { id: "1h", label: t('within1Hour'), urgent: true },
+                { id: "4h", label: t('within4Hours'), urgent: false },
+                { id: "12h", label: t('within12Hours'), urgent: false }
+              ].map((time) => (
+                <Button
+                  key={time.id}
+                  variant={responseTime === time.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setResponseTime(time.id as any)}
+                  className={
+                    responseTime === time.id 
+                      ? time.urgent ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
+                      : "border-white/30 bg-white/5 text-white hover:bg-white/15 backdrop-blur-sm"
+                  }
+                >
+                  <Clock className="mr-1 h-3 w-3" />
+                  {time.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <Button 
+            onClick={handleSubmit}
+            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-4 text-lg transition-all duration-200 hover:scale-[1.02]"
+            disabled={!message.trim()}
+          >
+            <Send className="mr-2 h-5 w-5" />
+            {t('sendRequest')}
+          </Button>
+        </div>
       </div>
     </div>
   );
