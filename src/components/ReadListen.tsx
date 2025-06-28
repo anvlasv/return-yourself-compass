@@ -40,7 +40,7 @@ export const ReadListen = ({ onBack }: ReadListenProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 pt-6">
       <div className="max-w-md mx-auto">
         <ReadListenHeader onBack={onBack} />
 

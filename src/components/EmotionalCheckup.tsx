@@ -47,12 +47,12 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   if (showResult) {
     const result = getCheckupResult(getTotalScore(), t);
     return (
-      <div className="min-h-screen p-4 pt-20">
+      <div className="min-h-screen p-4 pt-6">
         <div className="max-w-md mx-auto">
           <Button 
             variant="ghost" 
             onClick={onBack}
-            className="text-white hover:bg-white/10 mb-6 transition-colors duration-200"
+            className="text-white hover:bg-white/10 mb-4 transition-colors duration-200"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t('backToMenu')}
@@ -67,12 +67,12 @@ export const EmotionalCheckup = ({ onBack, onNavigate }: EmotionalCheckupProps) 
   const question = questions[currentQuestion];
   
   return (
-    <div className="min-h-screen p-4 pt-20">
+    <div className="min-h-screen p-4 pt-6">
       <div className="max-w-md mx-auto">
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-white hover:bg-white/10 mb-6 transition-colors duration-200"
+          className="text-white hover:bg-white/10 mb-4 transition-colors duration-200"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToMenu')}

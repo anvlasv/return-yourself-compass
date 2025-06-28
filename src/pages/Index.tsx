@@ -8,9 +8,10 @@ import { BookSession } from "@/components/BookSession";
 import { EmergencyContact } from "@/components/EmergencyContact";
 import { ReadListen } from "@/components/ReadListen";
 import { Progress } from "@/components/Progress";
+import { AdminPanel } from "@/components/AdminPanel";
 import { Header } from "@/components/Header";
 
-export type AppScreen = "hero" | "menu" | "book" | "checkup" | "read" | "sos" | "emergency" | "progress";
+export type AppScreen = "hero" | "menu" | "book" | "checkup" | "read" | "sos" | "emergency" | "progress" | "admin";
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("hero");
@@ -45,6 +46,8 @@ const Index = () => {
         return <EmergencyContact onBack={handleBack} />;
       case "progress":
         return <Progress onBack={handleBack} />;
+      case "admin":
+        return <AdminPanel onBack={handleBack} />;
       default:
         return <HeroSection onStart={handleStart} />;
     }

@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { Calendar, Heart, BookOpen, Shield, Phone, TrendingUp } from "lucide-react";
+import { Calendar, Heart, BookOpen, Shield, Phone, TrendingUp, Settings } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { AppScreen } from "@/pages/Index";
 
@@ -10,6 +10,9 @@ interface MainMenuProps {
 
 export const MainMenu = ({ onNavigate }: MainMenuProps) => {
   const { t } = useLanguage();
+  
+  // Временная проверка роли - в реальном проекте это будет из контекста авторизации
+  const isAdmin = true; // Установите в false для клиентов
 
   const menuItems = [
     {
@@ -62,11 +65,23 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
     }
   ];
 
+  // Добавляем админ-панель только для психолога
+  if (isAdmin) {
+    menuItems.push({
+      id: "admin" as AppScreen,
+      titleKey: "adminPanel",
+      descriptionKey: "adminPanelDesc",
+      icon: Settings,
+      color: "from-slate-600 to-slate-700",
+      urgent: false
+    });
+  }
+
   return (
-    <div className="min-h-screen p-4 pt-20">
+    <div className="min-h-screen p-4 pt-6">
       <div className="max-w-md mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-white mb-2">{t('howCanWeHelp')}</h2>
           <p className="text-slate-300">{t('chooseWhatFeels')}</p>
         </div>
@@ -89,10 +104,14 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
                   </div>
                   <div className="flex-1 ml-4 min-w-0">
                     <h3 className="text-lg font-semibold text-white mb-1 flex items-center">
-                      <span className="truncate">{t(item.titleKey)}</span>
+                      <span className="truncate">
+                        {item.id === 'admin' ? 'Панель администратора' : t(item.titleKey)}
+                      </span>
                       {item.urgent && <span className="ml-2 text-xs bg-white/30 px-2 py-1 rounded-full flex-shrink-0">{t('urgent')}</span>}
                     </h3>
-                    <p className="text-white/80 text-sm line-clamp-2">{t(item.descriptionKey)}</p>
+                    <p className="text-white/80 text-sm line-clamp-2">
+                      {item.id === 'admin' ? 'Управление контентом и настройками' : t(item.descriptionKey)}
+                    </p>
                   </div>
                 </div>
               </Card>
