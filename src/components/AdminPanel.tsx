@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -102,7 +103,7 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
         </Button>
       </div>
 
-      <div className="pt-16 p-4">
+      <div className="pt-32 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center">
