@@ -10,16 +10,15 @@ interface CheckupProgressProps {
 export const CheckupProgress = ({ currentQuestion, totalQuestions, hasAnswered = false }: CheckupProgressProps) => {
   const { t } = useLanguage();
   
-  // Логика прогресса: 0% в начале, увеличивается после каждого ответа
-  const progress = hasAnswered 
-    ? ((currentQuestion + 1) / totalQuestions) * 100 
-    : (currentQuestion / totalQuestions) * 100;
+  // Логика прогресса: показываем количество отвеченных вопросов
+  const answeredCount = hasAnswered ? currentQuestion + 1 : currentQuestion;
+  const progress = (answeredCount / totalQuestions) * 100;
   
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-3">
         <span className="text-white/80 text-sm font-medium">
-          {currentQuestion + 1} / {totalQuestions}
+          {answeredCount} / {totalQuestions}
         </span>
         <span className="text-white/80 text-sm font-medium">{Math.round(progress)}%</span>
       </div>
