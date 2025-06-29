@@ -87,7 +87,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
       <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
         <div className="max-w-md mx-auto">
           {/* Fixed back button */}
-          <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
+          <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
             <Button 
               variant="ghost" 
               onClick={stopBreathing}
@@ -153,7 +153,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
       <div className="min-h-screen p-4 pt-6">
         <div className="max-w-md mx-auto">
           {/* Fixed back button */}
-          <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
+          <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
             <Button 
               variant="ghost" 
               onClick={() => setActiveExercise(null)}
@@ -196,7 +196,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
   return (
     <div className="min-h-screen pb-20">
       {/* Fixed back button */}
-      <div className="fixed top-14 left-0 right-0 z-30 bg-slate-900 p-4 h-16">
+      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
         <Button 
           variant="ghost" 
           onClick={onBack}
