@@ -49,7 +49,7 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-white mb-2">{t('bookSession')}</h2>
-            <p className="text-slate-300">{t('professionalSupport')}</p>
+            <p className="text-slate-300">Запишитесь на консультацию с психологом</p>
           </div>
 
           <div className="mb-6">
@@ -128,7 +128,7 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
           </Button>
 
           <p className="text-xs text-slate-400 text-center mt-4">
-            {t('confirmationMessage')}
+            После бронирования мы свяжемся с вами для подтверждения записи
           </p>
         </div>
       </div>

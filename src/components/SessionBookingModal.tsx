@@ -192,7 +192,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
             <Button 
               onClick={onClose}
               variant="outline"
-              className="border-slate-600 text-white hover:bg-slate-700"
+              className="border-slate-600 text-slate-300 bg-slate-700 hover:bg-slate-600 hover:text-white"
               disabled={isSubmitting}
             >
               {t('cancel')}
