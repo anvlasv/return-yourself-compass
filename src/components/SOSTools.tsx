@@ -53,8 +53,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     t('movementStep1'),
     t('movementStep2'),
     t('movementStep3'),
-    t('movementStep4'),
-    t('movementStep5')
+    t('movementStep4')
   ];
 
   const startBreathing = () => {
@@ -245,8 +244,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
               <div className="mt-8 flex gap-3">
                 <Button 
                   onClick={() => setThoughtText("")}
-                  variant="outline"
-                  className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                  className="flex-1 bg-slate-600 hover:bg-slate-500 text-white border border-slate-500"
                 >
                   {t('clearText')}
                 </Button>
@@ -293,7 +291,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
 
               <CheckupProgress 
                 currentQuestion={movementStep} 
-                totalQuestions={movementExercises.length}
+                totalQuestions={4}
                 hasAnswered={false}
               />
 
@@ -309,8 +307,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                 {movementStep > 0 && (
                   <Button 
                     onClick={() => setMovementStep(movementStep - 1)}
-                    variant="outline"
-                    className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                    className="bg-slate-600 hover:bg-slate-500 text-white border border-slate-500"
                   >
                     {t('previous')}
                   </Button>
