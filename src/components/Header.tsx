@@ -37,10 +37,10 @@ export const Header = () => {
               </div>
               
               <div className="flex flex-col space-y-2 w-full">
-                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-700">
+                <Button className="bg-slate-600 hover:bg-slate-500 text-white border border-slate-500">
                   {t('settings')}
                 </Button>
-                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-700">
+                <Button className="bg-red-600 hover:bg-red-500 text-white border border-red-500">
                   {t('logout')}
                 </Button>
               </div>
