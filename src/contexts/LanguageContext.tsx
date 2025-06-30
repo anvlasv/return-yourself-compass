@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LanguageContextType {
@@ -161,7 +160,27 @@ const translations = {
     sessionBooked: "Session successfully booked!",
     bookSessionBtn: "Book Session",
     cancel: "Cancel",
-    confirm: "Confirm"
+    confirm: "Confirm",
+    
+    // New translations for movement exercise
+    movementInstructions: "Follow these simple movements to release stress and tension",
+    step: "Step",
+    of: "of",
+    previous: "Previous",
+    next: "Next",
+    complete: "Complete",
+    movementStep1: "Take 5 deep breaths while stretching your arms up",
+    movementStep2: "Roll your shoulders back 10 times",
+    movementStep3: "Gently turn your head left and right 5 times each",
+    movementStep4: "Shake your hands and feet for 30 seconds",
+    movementStep5: "Take 3 more deep breaths and smile",
+    
+    // New translations for thought release
+    writeDownThoughts: "Write down your thoughts to help process and release them",
+    thoughtPlaceholder: "What's on your mind? Write freely without judgment...",
+    writingPrivate: "Your writing is completely private and will not be saved",
+    clearText: "Clear Text",
+    feelingBetter: "I'm Feeling Better"
   },
   ru: {
     // Hero Section
@@ -383,7 +402,27 @@ const translations = {
     pleaseSelect: "Пожалуйста, заполните все поля",
     sessionBooked: "Сессия успешно забронирована!",
     bookSessionBtn: "Забронировать сессию",
-    confirm: "Подтвердить"
+    confirm: "Подтвердить",
+    
+    // New translations for movement exercise
+    movementInstructions: "Выполните эти простые движения для снятия стресса и напряжения",
+    step: "Шаг",
+    of: "из",
+    previous: "Назад",
+    next: "Далее",
+    complete: "Завершить",
+    movementStep1: "Сделайте 5 глубоких вдохов, поднимая руки вверх",
+    movementStep2: "Сделайте круговые движения плечами назад 10 раз",
+    movementStep3: "Осторожно поверните голову влево и вправо по 5 раз",
+    movementStep4: "Потрясите руками и ногами в течение 30 секунд",
+    movementStep5: "Сделайте еще 3 глубоких вдоха и улыбнитесь",
+    
+    // New translations for thought release
+    writeDownThoughts: "Запишите свои мысли, чтобы помочь их обработать и отпустить",
+    thoughtPlaceholder: "О чем вы думаете? Пишите свободно, без осуждения...",
+    writingPrivate: "Ваши записи полностью приватны и не будут сохранены",
+    clearText: "Очистить текст",
+    feelingBetter: "Мне стало лучше"
   }
 };
 

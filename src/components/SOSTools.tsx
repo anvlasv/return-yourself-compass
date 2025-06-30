@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Play, Pause, RotateCcw } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { CheckupProgress } from "@/components/CheckupProgress";
 
 interface SOSToolsProps {
   onBack: () => void;
@@ -246,7 +246,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                 <Button 
                   onClick={() => setThoughtText("")}
                   variant="outline"
-                  className="flex-1 border-slate-600 text-white hover:bg-slate-700"
+                  className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
                 >
                   {t('clearText')}
                 </Button>
@@ -291,19 +291,13 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div className="text-center mb-6">
-                  <div className="text-2xl font-bold text-blue-400 mb-2">
-                    {t('step')} {movementStep + 1} {t('of')} {movementExercises.length}
-                  </div>
-                  <div className="w-full bg-slate-700 rounded-full h-2">
-                    <div 
-                      className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${((movementStep + 1) / movementExercises.length) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
+              <CheckupProgress 
+                currentQuestion={movementStep} 
+                totalQuestions={movementExercises.length}
+                hasAnswered={false}
+              />
 
+              <div className="space-y-4">
                 <div className="p-6 bg-slate-700 rounded-lg text-center">
                   <p className="text-white text-lg font-medium">
                     {movementExercises[movementStep]}
@@ -316,7 +310,7 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                   <Button 
                     onClick={() => setMovementStep(movementStep - 1)}
                     variant="outline"
-                    className="border-slate-600 text-white hover:bg-slate-700"
+                    className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
                   >
                     {t('previous')}
                   </Button>
