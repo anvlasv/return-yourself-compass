@@ -75,7 +75,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-slate-900 to-blue-900">
       {/* Fixed back button */}
       <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
         <Button 
@@ -88,7 +88,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
         </Button>
       </div>
 
-      <div className="pt-[120px] p-4">
+      <div className="pt-16 p-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">{t('yourProgressTitle')}</h2>
