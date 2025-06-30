@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,6 +15,8 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
   const [isBreathingActive, setIsBreathingActive] = useState(false);
   const [breathingStep, setBreathingStep] = useState("inhale");
   const [breathingCount, setBreathingCount] = useState(4);
+  const [thoughtText, setThoughtText] = useState("");
+  const [movementStep, setMovementStep] = useState(0);
 
   const exercises = [
     {
@@ -44,6 +47,14 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
       icon: "🏃",
       action: t('getMoving')
     }
+  ];
+
+  const movementExercises = [
+    t('movementStep1'),
+    t('movementStep2'),
+    t('movementStep3'),
+    t('movementStep4'),
+    t('movementStep5')
   ];
 
   const startBreathing = () => {
@@ -86,7 +97,6 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     return (
       <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
         <div className="max-w-md mx-auto">
-          {/* Fixed back button */}
           <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
             <Button 
               variant="ghost" 
@@ -150,9 +160,8 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     ];
 
     return (
-      <div className="min-h-screen p-4 pt-6">
+      <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
         <div className="max-w-md mx-auto">
-          {/* Fixed back button */}
           <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
             <Button 
               variant="ghost" 
@@ -193,9 +202,151 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
     );
   }
 
+  if (activeExercise === "writing") {
+    return (
+      <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
+        <div className="max-w-md mx-auto">
+          <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
+            <Button 
+              variant="ghost" 
+              onClick={() => setActiveExercise(null)}
+              className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('backToTools')}
+            </Button>
+          </div>
+
+          <div className="pt-20">
+            <Card className="p-6 bg-slate-800 border-slate-700">
+              <div className="text-center mb-6">
+                <div className="text-6xl mb-4">✍️</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {t('thoughtRelease')}
+                </h3>
+                <p className="text-slate-300">
+                  {t('writeDownThoughts')}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <textarea
+                  value={thoughtText}
+                  onChange={(e) => setThoughtText(e.target.value)}
+                  placeholder={t('thoughtPlaceholder')}
+                  className="w-full h-40 p-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                
+                <div className="text-sm text-slate-400 text-center">
+                  {t('writingPrivate')}
+                </div>
+              </div>
+
+              <div className="mt-8 flex gap-3">
+                <Button 
+                  onClick={() => setThoughtText("")}
+                  variant="outline"
+                  className="flex-1 border-slate-600 text-white hover:bg-slate-700"
+                >
+                  {t('clearText')}
+                </Button>
+                <Button 
+                  onClick={() => setActiveExercise(null)}
+                  className="flex-1 bg-green-500 hover:bg-green-600"
+                >
+                  {t('feelingBetter')}
+                </Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (activeExercise === "movement") {
+    return (
+      <div className="min-h-screen p-4 bg-gradient-to-br from-slate-900 to-blue-900 pt-6">
+        <div className="max-w-md mx-auto">
+          <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
+            <Button 
+              variant="ghost" 
+              onClick={() => setActiveExercise(null)}
+              className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t('backToTools')}
+            </Button>
+          </div>
+
+          <div className="pt-20">
+            <Card className="p-6 bg-slate-800 border-slate-700">
+              <div className="text-center mb-6">
+                <div className="text-6xl mb-4">🏃</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {t('quickMovement')}
+                </h3>
+                <p className="text-slate-300">
+                  {t('movementInstructions')}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="text-center mb-6">
+                  <div className="text-2xl font-bold text-blue-400 mb-2">
+                    {t('step')} {movementStep + 1} {t('of')} {movementExercises.length}
+                  </div>
+                  <div className="w-full bg-slate-700 rounded-full h-2">
+                    <div 
+                      className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${((movementStep + 1) / movementExercises.length) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-slate-700 rounded-lg text-center">
+                  <p className="text-white text-lg font-medium">
+                    {movementExercises[movementStep]}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 flex gap-3">
+                {movementStep > 0 && (
+                  <Button 
+                    onClick={() => setMovementStep(movementStep - 1)}
+                    variant="outline"
+                    className="border-slate-600 text-white hover:bg-slate-700"
+                  >
+                    {t('previous')}
+                  </Button>
+                )}
+                
+                {movementStep < movementExercises.length - 1 ? (
+                  <Button 
+                    onClick={() => setMovementStep(movementStep + 1)}
+                    className="flex-1 bg-blue-500 hover:bg-blue-600"
+                  >
+                    {t('next')}
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={() => setActiveExercise(null)}
+                    className="flex-1 bg-green-500 hover:bg-green-600"
+                  >
+                    {t('complete')}
+                  </Button>
+                )}
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen pb-20">
-      {/* Fixed back button */}
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-slate-900 to-blue-900">
       <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
         <Button 
           variant="ghost" 
@@ -224,9 +375,12 @@ export const SOSTools = ({ onBack }: SOSToolsProps) => {
                     startBreathing();
                   } else if (exercise.id === "grounding") {
                     setActiveExercise("grounding");
-                  } else {
-                    // For writing and movement, show coming soon
-                    setActiveExercise(exercise.id);
+                  } else if (exercise.id === "writing") {
+                    setActiveExercise("writing");
+                    setThoughtText("");
+                  } else if (exercise.id === "movement") {
+                    setActiveExercise("movement");
+                    setMovementStep(0);
                   }
                 }}
               >
