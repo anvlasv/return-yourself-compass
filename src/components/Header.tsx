@@ -10,6 +10,13 @@ export const Header = () => {
   const { t } = useLanguage();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  const handleSettings = () => {
+    // Закрываем модальное окно профиля
+    setIsProfileOpen(false);
+    // Здесь можно добавить логику открытия окна настроек
+    console.log("Открытие настроек");
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700/50 backdrop-blur-sm">
       <div className="flex items-center justify-between p-3 h-14">
@@ -33,11 +40,15 @@ export const Header = () => {
               
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-white">{t('userName')}</h3>
+                <p className="text-slate-400 text-sm">@{t('userName').toLowerCase()}</p>
                 <p className="text-slate-400 text-sm">{t('userEmail')}</p>
               </div>
               
               <div className="flex flex-col space-y-2 w-full">
-                <Button className="bg-slate-600 hover:bg-slate-500 text-white border border-slate-500">
+                <Button 
+                  className="bg-slate-600 hover:bg-slate-500 text-white border border-slate-500"
+                  onClick={handleSettings}
+                >
                   {t('settings')}
                 </Button>
                 <Button className="bg-red-600 hover:bg-red-500 text-white border border-red-500">
