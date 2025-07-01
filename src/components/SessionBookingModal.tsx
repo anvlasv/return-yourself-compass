@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
 
 interface SessionBookingModalProps {
   isOpen: boolean;
@@ -20,26 +21,51 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
 
   const timeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
     "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
 
-  // Имитация забронированных слотов
-  const bookedSlots = ["10:00", "14:00", "16:00"];
+  // Загружаем забронированные слоты при изменении даты
+  useEffect(() => {
+    if (selectedDate) {
+      loadBookedSlots(selectedDate);
+    }
+  }, [selectedDate]);
+
+  const loadBookedSlots = async (date: string) => {
+    try {
+      const startDate = `${date}T00:00:00Z`;
+      const endDate = `${date}T23:59:59Z`;
+      
+      const data = await getCalendarEvents(startDate, endDate);
+      
+      if (data.success && data.events) {
+        const bookedTimes = data.events.map((event: any) => {
+          if (event.start && event.start.dateTime) {
+            const eventDate = new Date(event.start.dateTime);
+            return eventDate.toLocaleTimeString('ru-RU', { 
+              hour: '2-digit', 
+              minute: '2-digit' 
+            });
+          }
+          return null;
+        }).filter(Boolean);
+        
+        setBookedSlots(bookedTimes);
+      }
+    } catch (error) {
+      console.error("Ошибка при загрузке забронированных слотов:", error);
+      // Используем статические забронированные слоты как fallback
+      setBookedSlots(["10:00", "14:00", "16:00"]);
+    }
+  };
 
   const sendToTelegram = async (bookingData: any) => {
     // Имитация отправки в Telegram
     console.log("Отправка в Telegram:", bookingData);
-    // В реальном приложении здесь был бы API вызов
-    return new Promise(resolve => setTimeout(resolve, 1000));
-  };
-
-  const addToGoogleCalendar = async (bookingData: any) => {
-    // Имитация добавления в Google Calendar
-    console.log("Добавление в Google Calendar:", bookingData);
-    // В реальном приложении здесь был бы API вызов к Google Calendar API
     return new Promise(resolve => setTimeout(resolve, 1000));
   };
 
@@ -53,6 +79,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
     
     try {
       const bookingData = {
+        title: `Консультация психолога (${selectedFormat === 'online' ? 'онлайн' : 'очно'})`,
         description: description.trim(),
         format: selectedFormat,
         date: selectedDate,
@@ -64,7 +91,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
       await sendToTelegram(bookingData);
       
       // Добавление записи в Google Calendar
-      await addToGoogleCalendar(bookingData);
+      await createCalendarEvent(bookingData);
       
       toast(t('sessionBooked'));
       onClose();
