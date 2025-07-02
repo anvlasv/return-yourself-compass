@@ -12,22 +12,22 @@ serve(async (req) => {
   }
 
   try {
-    const { startDate, endDate } = await req.json()
+    const { startDate, endDate, accessToken } = await req.json()
     
-    const apiKey = Deno.env.get('GOOGLE_CALENDAR_API_KEY')
-    if (!apiKey) {
-      throw new Error('Google Calendar API key не настроен')
+    if (!accessToken) {
+      throw new Error('Access token не предоставлен')
     }
-
+    
     const calendarId = 'primary'
     const timeMin = new Date(startDate).toISOString()
     const timeMax = new Date(endDate).toISOString()
     
     const response = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`,
+      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`,
       {
         method: 'GET',
         headers: {
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         }
       }

@@ -14,6 +14,10 @@ interface CalendarEvent {
   };
 }
 
+const getAccessToken = (): string | null => {
+  return localStorage.getItem('google_calendar_token');
+};
+
 export const createCalendarEvent = async (eventData: {
   title: string;
   description: string;
@@ -22,10 +26,15 @@ export const createCalendarEvent = async (eventData: {
   format: "online" | "offline";
 }) => {
   try {
-    // Получаем API ключ из Supabase secrets
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      throw new Error('Google Calendar не подключен. Необходимо авторизоваться.');
+    }
+
     const { data, error } = await supabase.functions.invoke('google-calendar-create-event', {
       body: {
-        eventData
+        eventData,
+        accessToken
       }
     });
 
@@ -43,10 +52,17 @@ export const createCalendarEvent = async (eventData: {
 
 export const getCalendarEvents = async (startDate: string, endDate: string) => {
   try {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      console.warn('Google Calendar не подключен');
+      return { success: true, events: [] };
+    }
+
     const { data, error } = await supabase.functions.invoke('google-calendar-get-events', {
       body: {
         startDate,
-        endDate
+        endDate,
+        accessToken
       }
     });
 
@@ -60,4 +76,8 @@ export const getCalendarEvents = async (startDate: string, endDate: string) => {
     console.error('Ошибка получения событий Google Calendar:', error);
     throw error;
   }
+};
+
+export const isGoogleCalendarConnected = (): boolean => {
+  return !!getAccessToken();
 };

@@ -12,11 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const { eventData } = await req.json()
+    const { eventData, accessToken } = await req.json()
     
-    const apiKey = Deno.env.get('GOOGLE_CALENDAR_API_KEY')
-    if (!apiKey) {
-      throw new Error('Google Calendar API key не настроен')
+    if (!accessToken) {
+      throw new Error('Access token не предоставлен')
     }
 
     // Формируем дату и время для события
@@ -36,12 +35,13 @@ serve(async (req) => {
       }
     }
 
-    const calendarId = 'primary' // Используем основной календарь
+    const calendarId = 'primary'
     const response = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`,
+      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
       {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(calendarEvent)

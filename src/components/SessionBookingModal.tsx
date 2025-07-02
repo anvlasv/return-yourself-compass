@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,6 +7,7 @@ import { Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
+import GoogleCalendarAuth from "@/components/GoogleCalendarAuth";
 
 interface SessionBookingModalProps {
   isOpen: boolean;
@@ -22,11 +22,22 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [showAuth, setShowAuth] = useState(false);
 
   const timeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
     "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
+
+  // Проверяем подключение к Google Calendar при открытии модала
+  useEffect(() => {
+    if (isOpen) {
+      const isConnected = localStorage.getItem('google_calendar_token');
+      if (!isConnected) {
+        setShowAuth(true);
+      }
+    }
+  }, [isOpen]);
 
   // Загружаем забронированные слоты при изменении даты
   useEffect(() => {
@@ -74,6 +85,13 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
       toast(t('pleaseSelect'));
       return;
     }
+
+    const isConnected = localStorage.getItem('google_calendar_token');
+    if (!isConnected) {
+      toast("Необходимо подключить Google Calendar для бронирования");
+      setShowAuth(true);
+      return;
+    }
     
     setIsSubmitting(true);
     
@@ -103,9 +121,19 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
       setSelectedTime("");
     } catch (error) {
       console.error("Ошибка при бронировании:", error);
+      if (error.message?.includes('не подключен')) {
+        setShowAuth(true);
+      }
       toast("Произошла ошибка при бронировании. Попробуйте еще раз.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setShowAuth(false);
+    if (selectedDate) {
+      loadBookedSlots(selectedDate);
     }
   };
 
@@ -117,6 +145,11 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
         </DialogHeader>
         
         <div className="space-y-6">
+          {/* Google Calendar авторизация */}
+          {showAuth && (
+            <GoogleCalendarAuth onAuthSuccess={handleAuthSuccess} />
+          )}
+
           {/* Описание запроса */}
           <div>
             <h3 className="text-white font-medium mb-3">{t('describeRequest')}</h3>
