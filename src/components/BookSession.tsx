@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -5,7 +6,7 @@ import { ArrowLeft, Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
-import GoogleCalendarAuth from "@/components/GoogleCalendarAuth";
+import { GoogleCalendarAuth } from "@/components/GoogleCalendarAuth";
 
 interface BookSessionProps {
   onBack: () => void;

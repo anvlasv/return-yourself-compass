@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, CheckCircle, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { getGoogleAuthUrl, handleGoogleOAuthCallback } from "@/utils/googleCalendarApi";
 
 interface GoogleCalendarAuthProps {
   onAuthSuccess?: () => void;
@@ -34,26 +35,21 @@ export const GoogleCalendarAuth = ({ onAuthSuccess }: GoogleCalendarAuthProps) =
   const handleOAuthCallback = async (code: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/google-oauth-callback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('google_calendar_token', data.access_token);
-        localStorage.setItem('google_calendar_email', data.email);
-        setIsAuthenticated(true);
-        setUserEmail(data.email);
-        toast("Успешно подключен к Google Calendar!");
-        onAuthSuccess?.();
-        
-        // Очищаем URL от параметров OAuth
-        window.history.replaceState({}, document.title, window.location.pathname);
-      } else {
-        throw new Error('OAuth callback failed');
+      const data = await handleGoogleOAuthCallback(code);
+      
+      localStorage.setItem('google_calendar_token', data.access_token);
+      localStorage.setItem('google_calendar_email', data.email);
+      if (data.refresh_token) {
+        localStorage.setItem('google_calendar_refresh_token', data.refresh_token);
       }
+      
+      setIsAuthenticated(true);
+      setUserEmail(data.email);
+      toast("Успешно подключен к Google Calendar!");
+      onAuthSuccess?.();
+      
+      // Очищаем URL от параметров OAuth
+      window.history.replaceState({}, document.title, window.location.pathname);
     } catch (error) {
       console.error('OAuth callback error:', error);
       toast("Ошибка при подключении к Google Calendar");
@@ -65,14 +61,8 @@ export const GoogleCalendarAuth = ({ onAuthSuccess }: GoogleCalendarAuthProps) =
   const handleGoogleAuth = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/google-oauth-url');
-      const data = await response.json();
-      
-      if (data.authUrl) {
-        window.location.href = data.authUrl;
-      } else {
-        throw new Error('Failed to get auth URL');
-      }
+      const authUrl = await getGoogleAuthUrl();
+      window.location.href = authUrl;
     } catch (error) {
       console.error('Google auth error:', error);
       toast("Ошибка при инициализации авторизации");
@@ -83,6 +73,7 @@ export const GoogleCalendarAuth = ({ onAuthSuccess }: GoogleCalendarAuthProps) =
   const handleDisconnect = () => {
     localStorage.removeItem('google_calendar_token');
     localStorage.removeItem('google_calendar_email');
+    localStorage.removeItem('google_calendar_refresh_token');
     setIsAuthenticated(false);
     setUserEmail("");
     toast("Отключен от Google Calendar");

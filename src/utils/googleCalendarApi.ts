@@ -81,3 +81,35 @@ export const getCalendarEvents = async (startDate: string, endDate: string) => {
 export const isGoogleCalendarConnected = (): boolean => {
   return !!getAccessToken();
 };
+
+export const getGoogleAuthUrl = async () => {
+  try {
+    const { data, error } = await supabase.functions.invoke('google-oauth-url');
+    
+    if (error) {
+      throw error;
+    }
+    
+    return data.authUrl;
+  } catch (error) {
+    console.error('Ошибка получения URL авторизации:', error);
+    throw error;
+  }
+};
+
+export const handleGoogleOAuthCallback = async (code: string) => {
+  try {
+    const { data, error } = await supabase.functions.invoke('google-oauth-callback', {
+      body: { code }
+    });
+    
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Ошибка OAuth callback:', error);
+    throw error;
+  }
+};
