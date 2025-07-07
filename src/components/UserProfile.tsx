@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Edit3, Save, X, Settings, LogOut, User, Mail } from "lucide-react";
+import { Edit3, Save, X, LogOut, User, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 interface UserProfileProps {
@@ -33,13 +33,7 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
 
   const handleLogout = () => {
     // Здесь будет логика выхода
-    toast("Выход из аккаунта");
-    onClose();
-  };
-
-  const handleSettings = () => {
-    // Здесь будет переход к настройкам
-    toast("Открытие настроек");
+    toast("Выход из профиля");
     onClose();
   };
 
@@ -156,15 +150,6 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
 
       {/* Кнопки действий */}
       <div className="flex flex-col space-y-3 pt-2">
-        <Button 
-          onClick={handleSettings}
-          variant="outline"
-          className="bg-slate-700 border-slate-600 text-white hover:bg-slate-600 transition-colors"
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          {t('settings')}
-        </Button>
-        
         <Button 
           onClick={handleLogout}
           variant="outline"
