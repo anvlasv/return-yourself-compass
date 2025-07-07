@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Settings, Phone, Link, Music, FileText, Plus, Edit2, Trash2 } from "lucide-react";
+import { ArrowLeft, Settings, Phone, Link, Music, FileText, Plus, Edit2, Trash2, Calendar } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
+import { GoogleCalendarAuth } from "@/components/GoogleCalendarAuth";
 
 interface AdminPanelProps {
   onBack: () => void;
@@ -27,7 +28,7 @@ interface ContentItem {
 
 export const AdminPanel = ({ onBack }: AdminPanelProps) => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'contacts' | 'content'>('contacts');
+  const [activeTab, setActiveTab] = useState<'contacts' | 'content' | 'calendar'>('contacts');
   
   // Sample data - в реальном проекте это будет из базы данных
   const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([
@@ -136,6 +137,17 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
             >
               <FileText className="inline mr-2 h-4 w-4" />
               Контент
+            </button>
+            <button
+              onClick={() => setActiveTab('calendar')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'calendar'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              <Calendar className="inline mr-2 h-4 w-4" />
+              Google Calendar
             </button>
           </div>
 
@@ -313,6 +325,28 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
                   </Card>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Google Calendar Tab */}
+          {activeTab === 'calendar' && (
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Подключение Google Calendar</h3>
+                <p className="text-slate-400">Управление интеграцией с Google Calendar для синхронизации записей</p>
+              </div>
+              
+              <GoogleCalendarAuth />
+              
+              <Card className="p-4 bg-slate-800 border-slate-700">
+                <h4 className="text-white font-semibold mb-3">Информация об интеграции</h4>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <p>• Автоматическая синхронизация записей с Google Calendar</p>
+                  <p>• Проверка доступных временных слотов</p>
+                  <p>• Создание событий при бронировании сессий</p>
+                  <p>• Защищенная OAuth2 авторизация</p>
+                </div>
+              </Card>
             </div>
           )}
         </div>

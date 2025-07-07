@@ -6,7 +6,6 @@ import { ArrowLeft, Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
-import { GoogleCalendarAuth } from "@/components/GoogleCalendarAuth";
 
 interface BookSessionProps {
   onBack: () => void;
@@ -18,20 +17,11 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
-  const [showAuth, setShowAuth] = useState(false);
 
   const timeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
     "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
-
-  // Проверяем подключение к Google Calendar при загрузке
-  useEffect(() => {
-    const isConnected = localStorage.getItem('google_calendar_token');
-    if (!isConnected) {
-      setShowAuth(true);
-    }
-  }, []);
 
   // Загружаем забронированные слоты при изменении даты
   useEffect(() => {
@@ -76,8 +66,7 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
 
     const isConnected = localStorage.getItem('google_calendar_token');
     if (!isConnected) {
-      toast("Необходимо подключить Google Calendar для бронирования");
-      setShowAuth(true);
+      toast("Необходимо подключить Google Calendar в панели администратора");
       return;
     }
     
@@ -95,17 +84,7 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
       onBack();
     } catch (error) {
       console.error("Ошибка при бронировании:", error);
-      if (error.message?.includes('не подключен')) {
-        setShowAuth(true);
-      }
       toast("Произошла ошибка при бронировании. Попробуйте еще раз.");
-    }
-  };
-
-  const handleAuthSuccess = () => {
-    setShowAuth(false);
-    if (selectedDate) {
-      loadBookedSlots(selectedDate);
     }
   };
 
@@ -129,13 +108,6 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
             <h2 className="text-2xl font-bold text-white mb-2">{t('bookSession')}</h2>
             <p className="text-slate-300">Запишитесь на консультацию с психологом</p>
           </div>
-
-          {/* Google Calendar авторизация */}
-          {showAuth && (
-            <div className="mb-6">
-              <GoogleCalendarAuth onAuthSuccess={handleAuthSuccess} />
-            </div>
-          )}
 
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-white mb-4">{t('chooseFormat')}</h3>
