@@ -87,7 +87,7 @@ export const Progress = ({ onBack }: ProgressProps) => {
         </Button>
       </div>
 
-      <div className="pt-16 p-4">
+      <div className="pt-32 p-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">{t('yourProgressTitle')}</h2>
