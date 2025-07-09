@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -93,28 +92,29 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
 
   return (
     <div className="min-h-screen pb-20 bg-gradient-to-br from-slate-900 to-blue-900">
-      {/* Fixed back button */}
-      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 h-16">
-        <Button 
-          variant="ghost" 
-          onClick={onBack}
-          className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Назад в меню
-        </Button>
+      {/* Fixed header with back button and title */}
+      <div className="fixed top-14 left-0 right-0 z-30 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className="p-4 h-16">
+          <Button 
+            variant="ghost" 
+            onClick={onBack}
+            className="text-white border border-white/20 hover:bg-white/10 transition-colors duration-200"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Назад в меню
+          </Button>
+        </div>
+        <div className="text-center pb-4 px-4">
+          <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center">
+            <Settings className="mr-2 h-6 w-6" />
+            Панель администратора
+          </h2>
+          <p className="text-slate-300">Управление контентом и настройками</p>
+        </div>
       </div>
 
-      <div className="pt-20 p-4">
+      <div className="pt-40 p-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center">
-              <Settings className="mr-2 h-6 w-6" />
-              Панель администратора
-            </h2>
-            <p className="text-slate-300">Управление контентом и настройками</p>
-          </div>
-
           {/* Tabs */}
           <div className="flex space-x-1 mb-6 bg-slate-800 p-1 rounded-lg">
             <button
@@ -355,4 +355,3 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
     </div>
   );
 };
-
