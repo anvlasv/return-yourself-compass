@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Edit3, Save, X, LogOut, User, Mail } from "lucide-react";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { Edit3, Save, X, LogOut, User, Mail, Star } from "lucide-react";
 import { toast } from "sonner";
 
 interface UserProfileProps {
@@ -13,17 +14,15 @@ interface UserProfileProps {
 
 export const UserProfile = ({ onClose }: UserProfileProps) => {
   const { t } = useLanguage();
+  const { user, logout, isAuthenticated } = useTelegram();
   const [isEditing, setIsEditing] = useState(false);
   const [userDescription, setUserDescription] = useState("");
-  
-  // Mock user data - в реальном приложении это будет из контекста/API
-  const [userData] = useState({
-    name: t('userName'),
-    email: t('userEmail'),
-    username: '@username',
-    avatar: '', // пустая строка означает что аватар не загружен
-    description: "Иногда чувствую тревогу и нужна поддержка в преодолении стрессовых ситуаций на работе."
-  });
+
+  useEffect(() => {
+    if (user) {
+      setUserDescription("Иногда чувствую тревогу и нужна поддержка в преодолении стрессовых ситуаций на работе.");
+    }
+  }, [user]);
 
   const handleSaveDescription = () => {
     // Здесь бы было сохранение в БД
@@ -32,8 +31,7 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
   };
 
   const handleLogout = () => {
-    // Здесь будет логика выхода
-    toast("Выход из профиля");
+    logout();
     onClose();
   };
 
@@ -55,22 +53,29 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
       {/* Аватар и основная информация */}
       <div className="flex flex-col items-center space-y-4">
         <Avatar className="h-24 w-24 border-4 border-slate-600">
-          <AvatarImage src={userData.avatar} alt={userData.name} />
+          <AvatarImage src={user?.photo_url || ""} alt={user?.first_name || "User"} />
           <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-2xl font-bold">
-            {userData.name.charAt(0).toUpperCase()}
+            {user ? (user.first_name?.[0] || user.username?.[0] || 'У') : t('userName').charAt(0)}
           </AvatarFallback>
         </Avatar>
         
-        <div className="text-center space-y-1">
-          <h3 className="text-lg font-semibold text-white">{userData.name}</h3>
+        <div className="text-center space-y-2">
+          <h3 className="text-lg font-semibold text-white">
+            {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username || 'Пользователь' : t('userName')}
+          </h3>
           <div className="space-y-1">
             <div className="flex items-center justify-center space-x-2 text-slate-400">
               <User className="h-4 w-4" />
-              <span className="text-sm">{userData.username}</span>
+              <span className="text-sm">@{user?.username || 'пользователь'}</span>
             </div>
+            {user?.is_premium && (
+              <div className="flex items-center justify-center space-x-2 text-yellow-400">
+                <Star className="h-4 w-4" />
+                <span className="text-sm">Telegram Premium</span>
+              </div>
+            )}
             <div className="flex items-center justify-center space-x-2 text-slate-400">
-              <Mail className="h-4 w-4" />
-              <span className="text-sm">{userData.email}</span>
+              <span className="text-sm">Язык: {user?.language_code || 'ru'}</span>
             </div>
           </div>
         </div>
@@ -95,8 +100,8 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
           
           {isEditing ? (
             <div className="space-y-3">
-              <Textarea
-                value={userDescription || userData.description}
+               <Textarea
+                value={userDescription}
                 onChange={(e) => setUserDescription(e.target.value)}
                 placeholder="Расскажите о том, с чем вам нужна помощь..."
                 className="bg-slate-700 border-slate-600 text-white resize-none min-h-[100px]"
@@ -124,11 +129,11 @@ export const UserProfile = ({ onClose }: UserProfileProps) => {
                 </Button>
               </div>
             </div>
-          ) : (
+           ) : (
             <p className="text-slate-300 text-sm leading-relaxed">
-              {userDescription || userData.description}
+              {userDescription || "Иногда чувствую тревогу и нужна поддержка в преодолении стрессовых ситуаций на работе."}
             </p>
-          )}
+           )}
         </div>
       </Card>
 

@@ -5,9 +5,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { UserProfile } from "@/components/UserProfile";
+import { useTelegram } from "@/contexts/TelegramContext";
 
 export const Header = () => {
   const { t } = useLanguage();
+  const { user } = useTelegram();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
@@ -17,12 +19,14 @@ export const Header = () => {
           <DialogTrigger asChild>
             <button className="flex items-center space-x-3 hover:bg-white/10 rounded-lg p-2 transition-colors">
               <Avatar className="h-8 w-8">
-                <AvatarImage src="" alt="User" />
+                <AvatarImage src={user?.photo_url || ""} alt="User" />
                 <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-semibold">
-                  {t('userName').charAt(0).toUpperCase()}
+                  {user ? (user.first_name?.[0] || user.username?.[0] || 'У') : t('userName').charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-white text-sm font-medium hidden sm:block">{t('userName')}</span>
+              <span className="text-white text-sm font-medium hidden sm:block">
+                {user ? (user.first_name || user.username || t('userName')) : t('userName')}
+              </span>
             </button>
           </DialogTrigger>
           

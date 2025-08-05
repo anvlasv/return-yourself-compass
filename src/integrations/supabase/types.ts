@@ -10,17 +10,82 @@ export type Database = {
   // Allows to automatically instanciate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      [_ in never]: never
+      telegram_users: {
+        Row: {
+          created_at: string
+          first_name: string | null
+          id: string
+          is_bot: boolean | null
+          is_premium: boolean | null
+          language_code: string | null
+          last_name: string | null
+          photo_url: string | null
+          telegram_id: number
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          is_bot?: boolean | null
+          is_premium?: boolean | null
+          language_code?: string | null
+          last_name?: string | null
+          photo_url?: string | null
+          telegram_id: number
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          is_bot?: boolean | null
+          is_premium?: boolean | null
+          language_code?: string | null
+          last_name?: string | null
+          photo_url?: string | null
+          telegram_id?: number
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      upsert_telegram_user: {
+        Args: {
+          p_telegram_id: number
+          p_username?: string
+          p_first_name?: string
+          p_last_name?: string
+          p_photo_url?: string
+          p_language_code?: string
+          p_is_bot?: boolean
+          p_is_premium?: boolean
+        }
+        Returns: {
+          created_at: string
+          first_name: string | null
+          id: string
+          is_bot: boolean | null
+          is_premium: boolean | null
+          language_code: string | null
+          last_name: string | null
+          photo_url: string | null
+          telegram_id: number
+          updated_at: string
+          username: string | null
+        }
+      }
     }
     Enums: {
       [_ in never]: never
