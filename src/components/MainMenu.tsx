@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Calendar, Heart, BookOpen, Shield, Phone, TrendingUp, Settings } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import type { AppScreen } from "@/pages/Index";
 
 interface MainMenuProps {
@@ -10,9 +11,7 @@ interface MainMenuProps {
 
 export const MainMenu = ({ onNavigate }: MainMenuProps) => {
   const { t } = useLanguage();
-  
-  // Временная проверка роли - в реальном проекте это будет из контекста авторизации
-  const isAdmin = true; // Установите в false для клиентов
+  const { isAdmin, isLoading } = useUserRole();
 
   const menuItems = [
     {
@@ -65,8 +64,8 @@ export const MainMenu = ({ onNavigate }: MainMenuProps) => {
     }
   ];
 
-  // Добавляем админ-панель только для психолога
-  if (isAdmin) {
+  // Добавляем админ-панель только для администраторов
+  if (isAdmin && !isLoading) {
     menuItems.push({
       id: "admin" as AppScreen,
       titleKey: "adminPanel",
