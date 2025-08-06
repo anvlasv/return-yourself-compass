@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Settings, Phone, Link, Music, FileText, Plus, Edit2, Trash2, Calendar } from "lucide-react";
+import { ArrowLeft, Settings, Phone, Link, Music, FileText, Plus, Edit2, Trash2, Calendar, Shield } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
 import { GoogleCalendarAuth } from "@/components/GoogleCalendarAuth";
+import { AdminRoleManager } from "@/components/AdminRoleManager";
 
 interface AdminPanelProps {
   onBack: () => void;
@@ -27,7 +28,8 @@ interface ContentItem {
 
 export const AdminPanel = ({ onBack }: AdminPanelProps) => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'contacts' | 'content' | 'calendar'>('contacts');
+  const [activeTab, setActiveTab] = useState<'contacts' | 'content' | 'roles' | 'calendar'>('contacts');
+  const [showRoleManager, setShowRoleManager] = useState(false);
   
   // Sample data - в реальном проекте это будет из базы данных
   const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([
@@ -89,6 +91,10 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
     toast("Контент удален");
   };
 
+  if (showRoleManager) {
+    return <AdminRoleManager onBack={() => setShowRoleManager(false)} />;
+  }
+
   return (
     <div className="min-h-screen pb-20 bg-gradient-to-br from-slate-900 to-blue-900">
       {/* Fixed back button */}
@@ -124,7 +130,7 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
               }`}
             >
               <Phone className="inline mr-2 h-4 w-4" />
-              Экстренные контакты
+              Контакты
             </button>
             <button
               onClick={() => setActiveTab('content')}
@@ -138,6 +144,17 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
               Контент
             </button>
             <button
+              onClick={() => setActiveTab('roles')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'roles'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              <Shield className="inline mr-2 h-4 w-4" />
+              Роли
+            </button>
+            <button
               onClick={() => setActiveTab('calendar')}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
                 activeTab === 'calendar'
@@ -146,7 +163,7 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
               }`}
             >
               <Calendar className="inline mr-2 h-4 w-4" />
-              Google Calendar
+              Календарь
             </button>
           </div>
 
@@ -326,6 +343,42 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
               </div>
             </div>
           )}
+
+          {/* Roles Tab */}
+          {activeTab === 'roles' && (
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Управление ролями пользователей</h3>
+                <p className="text-slate-400">Назначение ролей администратора пользователям</p>
+              </div>
+              
+              <Card className="p-4 bg-slate-800 border-slate-700">
+                <div className="text-center space-y-4">
+                  <div className="bg-purple-500/10 p-4 rounded-lg">
+                    <Shield className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+                    <h4 className="text-white font-semibold mb-2">Управление ролями</h4>
+                    <p className="text-slate-300 text-sm mb-4">
+                      Назначайте роли администратора пользователям для доступа к панели управления
+                    </p>
+                    <Button 
+                      onClick={() => setShowRoleManager(true)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white"
+                    >
+                      Открыть управление ролями
+                    </Button>
+                  </div>
+                  
+                  <div className="text-xs text-slate-400 space-y-1">
+                    <p>• Только администраторы могут назначать роли</p>
+                    <p>• Роль "admin" дает полный доступ к системе</p>
+                    <p>• Для получения Telegram ID используйте бота @userinfobot</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {/* Google Calendar Tab */}
 
           {/* Google Calendar Tab */}
           {activeTab === 'calendar' && (

@@ -111,6 +111,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      set_app_setting: {
+        Args: { name: string; value: string }
+        Returns: undefined
+      }
       upsert_telegram_user: {
         Args: {
           p_telegram_id: number
