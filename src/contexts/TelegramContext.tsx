@@ -89,9 +89,17 @@ export const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setIsLoading(false);
       }
     } else {
-      // Для разработки без Telegram
+      // Для разработки без Telegram - используем демо пользователя с admin правами
       console.log('Telegram WebApp API не найден. Используем демо данные.');
-      setIsLoading(false);
+      const demoUser = {
+        id: 185129717,
+        first_name: 'Demo',
+        last_name: 'Admin',
+        username: 'demo_admin',
+        language_code: 'ru',
+        is_premium: false
+      };
+      authenticateUser(demoUser);
     }
   }, []);
 
