@@ -126,8 +126,10 @@ export const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
       // Устанавливаем настройку для RLS (это будет сделано через SQL функцию)
 
+      console.log('Setting user data:', data);
       setUser(data);
       setIsAuthenticated(true);
+      console.log('User authenticated successfully');
       toast.success('Добро пожаловать!');
     } catch (error) {
       console.error('Ошибка авторизации:', error);
