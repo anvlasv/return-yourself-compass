@@ -32,7 +32,17 @@ interface TelegramWebApp {
   version: string;
   platform: string;
   colorScheme: 'light' | 'dark';
-  themeParams: any;
+  themeParams: Partial<{
+    bg_color: string;
+    text_color: string;
+    hint_color: string;
+    link_color: string;
+    button_color: string;
+    button_text_color: string;
+    secondary_bg_color: string;
+    header_color: string;
+    accent_text_color: string;
+  }>;
   isExpanded: boolean;
   viewportHeight: number;
   viewportStableHeight: number;
@@ -103,7 +113,9 @@ export const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  const authenticateUser = async (telegramUser: any) => {
+  const authenticateUser = async (
+    telegramUser: NonNullable<TelegramWebApp["initDataUnsafe"]["user"]>
+  ) => {
     try {
       setIsLoading(true);
       

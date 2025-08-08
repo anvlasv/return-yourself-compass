@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
-import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
+import { createCalendarEvent, getCalendarEvents, type GoogleCalendarEvent } from "@/utils/googleCalendarApi";
 
 interface SessionBookingModalProps {
   isOpen: boolean;
@@ -43,7 +43,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
       const data = await getCalendarEvents(startDate, endDate);
       
       if (data.success && data.events) {
-        const bookedTimes = data.events.map((event: any) => {
+        const bookedTimes = data.events.map((event: GoogleCalendarEvent) => {
           if (event.start && event.start.dateTime) {
             const eventDate = new Date(event.start.dateTime);
             return eventDate.toLocaleTimeString('ru-RU', { 
@@ -52,7 +52,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
             });
           }
           return null;
-        }).filter(Boolean);
+        }).filter(Boolean) as string[];
         
         setBookedSlots(bookedTimes);
       }
@@ -63,7 +63,16 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
     }
   };
 
-  const sendToTelegram = async (bookingData: any) => {
+  interface BookingData {
+    title: string;
+    description: string;
+    format: "online" | "offline";
+    date: string;
+    time: string;
+    timestamp: string;
+  }
+
+  const sendToTelegram = async (bookingData: BookingData) => {
     // Имитация отправки в Telegram
     console.log("Отправка в Telegram:", bookingData);
     return new Promise(resolve => setTimeout(resolve, 1000));
@@ -84,7 +93,7 @@ export const SessionBookingModal = ({ isOpen, onClose }: SessionBookingModalProp
     setIsSubmitting(true);
     
     try {
-      const bookingData = {
+      const bookingData: BookingData = {
         title: `Консультация психолога (${selectedFormat === 'online' ? 'онлайн' : 'очно'})`,
         description: description.trim(),
         format: selectedFormat,
