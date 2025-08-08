@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#2a2a2a" />
+    <title>MindCare — Психолог в Telegram</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">🧠</div>
+          <div class="titles">
+            <h1>MindCare</h1>
+            <p>Мини-приложение психолога</p>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="btn-preview" class="btn ghost">Превью</button>
+        </div>
+      </header>
+
+      <main id="content">
+        <section id="screen-home" class="screen visible">
+          <div class="hero">
+            <h2>Как вы себя чувствуете сегодня?</h2>
+            <p>Быстрый чек-ин, упражнения и дневник — всё в одном месте.</p>
+          </div>
+          <div class="cards-grid">
+            <button class="card" data-target="checkin">
+              <div class="card-icon">🙂</div>
+              <div class="card-title">Чек‑ин настроения</div>
+              <div class="card-sub">1 минута</div>
+            </button>
+
+            <button class="card" data-target="exercises">
+              <div class="card-icon">🌿</div>
+              <div class="card-title">Упражнения</div>
+              <div class="card-sub">дыхание, заземление</div>
+            </button>
+
+            <button class="card" data-target="journal">
+              <div class="card-icon">📔</div>
+              <div class="card-title">Дневник</div>
+              <div class="card-sub">подсказки и записи</div>
+            </button>
+
+            <button class="card" data-target="homework">
+              <div class="card-icon">✅</div>
+              <div class="card-title">Домашние задания</div>
+              <div class="card-sub">трекер задач</div>
+            </button>
+
+            <button class="card" data-target="sos">
+              <div class="card-icon">🆘</div>
+              <div class="card-title">SOS</div>
+              <div class="card-sub">план самопомощи</div>
+            </button>
+
+            <button class="card" data-target="profile">
+              <div class="card-icon">👤</div>
+              <div class="card-title">Профиль</div>
+              <div class="card-sub">запись на сессию</div>
+            </button>
+          </div>
+        </section>
+
+        <section id="screen-checkin" class="screen">
+          <div class="section">
+            <h3>Чек‑ин настроения</h3>
+            <div class="mood">
+              <div class="mood-emoji" id="mood-emoji">🙂</div>
+              <input id="mood-range" type="range" min="1" max="10" value="6" />
+              <div class="mood-label" id="mood-label">6 / 10</div>
+            </div>
+
+            <div class="tags" id="feelings">
+              <button data-tag="спокойствие">спокойствие</button>
+              <button data-tag="радость">радость</button>
+              <button data-tag="тревога">тревога</button>
+              <button data-tag="усталость">усталость</button>
+              <button data-tag="злость">злость</button>
+              <button data-tag="энергия">энергия</button>
+            </div>
+
+            <label class="field">
+              <span>Короткая заметка</span>
+              <textarea id="mood-note" rows="3" placeholder="Что повлияло на ваше состояние?"></textarea>
+            </label>
+
+            <div class="actions-row">
+              <button id="save-checkin" class="btn primary">Сохранить</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h4>История за неделю</h4>
+            <div id="history" class="history"></div>
+          </div>
+        </section>
+
+        <section id="screen-exercises" class="screen">
+          <div class="section">
+            <h3>Упражнения</h3>
+            <div class="exercise">
+              <div class="exercise-head">
+                <div>
+                  <div class="exercise-title">Дыхание 4‑7‑8</div>
+                  <div class="exercise-sub">Расслабление и снижение напряжения</div>
+                </div>
+                <button id="breath-toggle" class="btn primary">Старт</button>
+              </div>
+              <div class="breath-timer">
+                <div id="breath-phase">Вдох</div>
+                <div id="breath-count">4</div>
+              </div>
+            </div>
+
+            <div class="exercise">
+              <div class="exercise-head">
+                <div>
+                  <div class="exercise-title">Заземление 5‑4‑3‑2‑1</div>
+                  <div class="exercise-sub">Возврат внимания в настоящий момент</div>
+                </div>
+              </div>
+              <ol class="grounding">
+                <li>5 вещей, которые вы видите</li>
+                <li>4 вещи, которые вы чувствуете телом</li>
+                <li>3 звука, которые вы слышите</li>
+                <li>2 запаха, которые вы ощущаете</li>
+                <li>1 вкус, который вы чувствуете</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-journal" class="screen">
+          <div class="section">
+            <h3>Дневник</h3>
+            <label class="field">
+              <span>Подсказка</span>
+              <select id="prompt">
+                <option value="за что вы благодарны сегодня?">За что вы благодарны сегодня?</option>
+                <option value="что дало вам энергию?">Что дало вам энергию?</option>
+                <option value="что было сложным и как вы справились?">Что было сложным и как вы справились?</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Запись</span>
+              <textarea id="journal-text" rows="5" placeholder="Напишите несколько строк..."></textarea>
+            </label>
+
+            <div class="actions-row">
+              <button id="save-journal" class="btn primary">Сохранить запись</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h4>Последние записи</h4>
+            <div id="journal-list" class="list"></div>
+          </div>
+        </section>
+
+        <section id="screen-homework" class="screen">
+          <div class="section">
+            <h3>Домашние задания</h3>
+            <div class="task-add">
+              <input id="task-input" type="text" placeholder="Новая задача" />
+              <button id="task-add" class="btn primary">Добавить</button>
+            </div>
+            <div id="tasks" class="tasks"></div>
+          </div>
+        </section>
+
+        <section id="screen-sos" class="screen">
+          <div class="section">
+            <h3>План самопомощи</h3>
+            <div class="sos-grid">
+              <button class="card small" id="sos-breathe">
+                <div class="card-icon">🌬️</div>
+                <div class="card-title">Дыхание</div>
+              </button>
+              <button class="card small" id="sos-ground">
+                <div class="card-icon">🪨</div>
+                <div class="card-title">Заземление</div>
+              </button>
+              <button class="card small" id="sos-note">
+                <div class="card-icon">✍️</div>
+                <div class="card-title">Записать мысль</div>
+              </button>
+            </div>
+
+            <div class="contacts">
+              <div class="contact">
+                <div class="contact-name">Экстренная помощь</div>
+                <a class="btn link" href="tel:112">112</a>
+              </div>
+              <div class="contact">
+                <div class="contact-name">Связаться с психологом</div>
+                <button class="btn link" id="contact-psych">Написать</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-profile" class="screen">
+          <div class="section">
+            <h3>Профиль</h3>
+            <div class="profile">
+              <div class="avatar">🧑‍⚕️</div>
+              <div class="info">
+                <div class="name">Ваш психолог</div>
+                <div class="sub">Онлайн‑сессии, КПТ, майндфулнесс</div>
+              </div>
+            </div>
+            <div class="actions-row">
+              <button id="book-session" class="btn primary">Записаться на сессию</button>
+              <button id="open-website" class="btn ghost">Сайт</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="preview-modal" class="modal">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="preview-hero">
+              <div class="logo big">🧠</div>
+              <h3>MindCare</h3>
+              <p>Лёгкий старт: чек‑ин, упражнения, дневник.</p>
+            </div>
+            <div class="preview-cards">
+              <div class="preview-card">🙂 Чек‑ин</div>
+              <div class="preview-card">🌿 Упражнения</div>
+              <div class="preview-card">📔 Дневник</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn primary modal-close" data-close>Понятно</button>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
