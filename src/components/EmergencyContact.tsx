@@ -104,16 +104,16 @@ export const EmergencyContact = ({ onBack }: EmergencyContactProps) => {
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-white mb-4">{t('howToContactYou')}</h3>
             <div className="grid grid-cols-3 gap-3">
-              {[
+              {([
                 { id: "telegram", label: t('telegram'), icon: "💬" },
                 { id: "phone", label: t('phone'), icon: "📞" },
                 { id: "email", label: t('email'), icon: "📧" }
-              ].map((method) => (
+              ] as const).map((method) => (
                 <Button
                   key={method.id}
                   variant={contactMethod === method.id ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setContactMethod(method.id as any)}
+                  onClick={() => setContactMethod(method.id)}
                   className={
                     contactMethod === method.id 
                       ? "bg-blue-500 hover:bg-blue-600 text-white" 
@@ -131,16 +131,16 @@ export const EmergencyContact = ({ onBack }: EmergencyContactProps) => {
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-white mb-4">{t('whenNeedResponse')}</h3>
             <div className="grid grid-cols-3 gap-3">
-              {[
+              {([
                 { id: "1h", label: t('within1Hour'), urgent: true },
                 { id: "4h", label: t('within4Hours'), urgent: false },
                 { id: "12h", label: t('within12Hours'), urgent: false }
-              ].map((time) => (
+              ] as const).map((time) => (
                 <Button
                   key={time.id}
                   variant={responseTime === time.id ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setResponseTime(time.id as any)}
+                  onClick={() => setResponseTime(time.id)}
                   className={
                     responseTime === time.id 
                       ? time.urgent ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"

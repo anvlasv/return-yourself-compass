@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, CheckCircle, AlertCircle } from "lucide-react";
@@ -15,24 +15,7 @@ export const GoogleCalendarAuth = ({ onAuthSuccess }: GoogleCalendarAuthProps) =
   const [isLoading, setIsLoading] = useState(false);
   const [userEmail, setUserEmail] = useState<string>("");
 
-  useEffect(() => {
-    // Проверяем, есть ли сохраненный токен
-    const token = localStorage.getItem('google_calendar_token');
-    const email = localStorage.getItem('google_calendar_email');
-    if (token && email) {
-      setIsAuthenticated(true);
-      setUserEmail(email);
-    }
-
-    // Обрабатываем возврат из OAuth
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      handleOAuthCallback(code);
-    }
-  }, []);
-
-  const handleOAuthCallback = async (code: string) => {
+  const handleOAuthCallback = useCallback(async (code: string) => {
     setIsLoading(true);
     try {
       const data = await handleGoogleOAuthCallback(code);
@@ -56,7 +39,24 @@ export const GoogleCalendarAuth = ({ onAuthSuccess }: GoogleCalendarAuthProps) =
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [onAuthSuccess]);
+
+  useEffect(() => {
+    // Проверяем, есть ли сохраненный токен
+    const token = localStorage.getItem('google_calendar_token');
+    const email = localStorage.getItem('google_calendar_email');
+    if (token && email) {
+      setIsAuthenticated(true);
+      setUserEmail(email);
+    }
+
+    // Обрабатываем возврат из OAuth
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      handleOAuthCallback(code);
+    }
+  }, [handleOAuthCallback]);
 
   const handleGoogleAuth = async () => {
     setIsLoading(true);

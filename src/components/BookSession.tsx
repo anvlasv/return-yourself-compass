@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Video, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
-import { createCalendarEvent, getCalendarEvents } from "@/utils/googleCalendarApi";
+import { createCalendarEvent, getCalendarEvents, type GoogleCalendarEvent } from "@/utils/googleCalendarApi";
 
 interface BookSessionProps {
   onBack: () => void;
@@ -38,16 +38,18 @@ export const BookSession = ({ onBack }: BookSessionProps) => {
       const data = await getCalendarEvents(startDate, endDate);
       
       if (data.success && data.events) {
-        const bookedTimes = data.events.map((event: any) => {
-          if (event.start && event.start.dateTime) {
-            const eventDate = new Date(event.start.dateTime);
-            return eventDate.toLocaleTimeString('ru-RU', { 
-              hour: '2-digit', 
-              minute: '2-digit' 
-            });
-          }
-          return null;
-        }).filter(Boolean);
+        const bookedTimes = data.events
+          .map((event: GoogleCalendarEvent) => {
+            if (event.start && event.start.dateTime) {
+              const eventDate = new Date(event.start.dateTime);
+              return eventDate.toLocaleTimeString('ru-RU', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              });
+            }
+            return null;
+          })
+          .filter((t): t is string => Boolean(t));
         
         setBookedSlots(bookedTimes);
       }

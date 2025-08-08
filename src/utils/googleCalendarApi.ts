@@ -1,6 +1,18 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
+export type GoogleCalendarEvent = {
+  start?: { dateTime?: string; timeZone?: string };
+  end?: { dateTime?: string; timeZone?: string };
+  summary?: string;
+  description?: string;
+};
+
+export interface GoogleCalendarEventsResponse {
+  success: boolean;
+  events: GoogleCalendarEvent[];
+}
+
 interface CalendarEvent {
   summary: string;
   description: string;
@@ -50,7 +62,7 @@ export const createCalendarEvent = async (eventData: {
   }
 };
 
-export const getCalendarEvents = async (startDate: string, endDate: string) => {
+export const getCalendarEvents = async (startDate: string, endDate: string): Promise<GoogleCalendarEventsResponse> => {
   try {
     const accessToken = getAccessToken();
     if (!accessToken) {
@@ -71,7 +83,7 @@ export const getCalendarEvents = async (startDate: string, endDate: string) => {
       throw error;
     }
 
-    return data;
+    return data as GoogleCalendarEventsResponse;
   } catch (error) {
     console.error('Ошибка получения событий Google Calendar:', error);
     throw error;
